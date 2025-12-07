@@ -162,4 +162,5 @@ class PosterController extends Controller
             ->header('Content-Type', 'image/png')
             ->header('Content-Disposition', 'attachment; filename="affiche-noel-' . $poster->unique_id . '.png"');
     }
+
 }

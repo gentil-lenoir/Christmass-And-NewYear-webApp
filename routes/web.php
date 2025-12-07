@@ -35,6 +35,8 @@ Route::post('/posters', [PosterController::class, 'store'])->name('posters.store
 Route::get('/poster/{id}', [PosterController::class, 'show'])->name('posters.show');
 Route::get('/poster/{id}/download', [PosterController::class, 'download'])->name('posters.download');
 Route::get('/posters', [PosterController::class, 'index'])->name('posters.index');
+Route::post('/poster/{id}/share', [PosterController::class, 'share'])->name('posters.share');
+Route::post('/poster/{id}/like', [PosterController::class, 'like'])->name('posters.like');
 
 // API Routes
 Route::post('/api/posters/sync', [PosterController::class, 'syncFromLocalStorage']);
@@ -51,3 +53,8 @@ Route::get('/giftlists', [GiftListController::class, 'index'])->name('giftlists.
 
 // API Routes
 Route::post('/api/giftlists/sync', [GiftListController::class, 'syncFromLocalStorage']);
+
+
+use App\Http\Controllers\SitemapController;
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);

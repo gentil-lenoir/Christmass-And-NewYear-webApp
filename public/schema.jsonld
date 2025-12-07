@@ -2,19 +2,49 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "http://127.0.0.1:8000/#organization",
-      "name": "BlocPlan",
+      "@type": "WebSite",
+      "@id": "http://127.0.0.1:8000/#",
+      "name": "ChristmassAndNewYear",
       "url": "http://127.0.0.1:8000/",
       "sameAs": [],
-      "logo": "http://127.0.0.1:8000/images/logo.png",
+      "logo": "http://127.0.0.1:8000/favicon.ico",
       "description": "Application pour créer et partager des cartes et affiches de Noël et Nouvel An."
     },
     {
-      "@type": "WebSite",
-      "@id": "http://127.0.0.1:8000/#website",
+      "@type": "Page",
+      "@id": "http://127.0.0.1:8000/create-letter",
       "url": "http://127.0.0.1:8000/",
-      "name": "BlocPlan",
+      "name": "ChristmassAndNewYear",
+      "description": "Créez des cartes et affiches de Noël & Nouvel An — lettres, cadres photo, listes cadeaux, templates et partage.",
+      "publisher": {
+        "@id": "http://127.0.0.1:8000/#"
+      }
+    },
+    {
+      "@type": "Page",
+      "@id": "http://127.0.0.1:8000/create-giftlist",
+      "url": "http://127.0.0.1:8000/",
+      "name": "ChristmassAndNewYear",
+      "description": "Créez des cartes et affiches de Noël & Nouvel An — lettres, cadres photo, listes cadeaux, templates et partage.",
+      "publisher": {
+        "@id": "http://127.0.0.1:8000/#"
+      }
+    },
+    {
+      "@type": "Page",
+      "@id": "http://127.0.0.1:8000/create-poster",
+      "url": "http://127.0.0.1:8000/",
+      "name": "ChristmassAndNewYear",
+      "description": "Créez des cartes et affiches de Noël & Nouvel An — lettres, cadres photo, listes cadeaux, templates et partage.",
+      "publisher": {
+        "@id": "http://127.0.0.1:8000/#"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "http://127.0.0.1:8000/create-card",
+      "url": "http://127.0.0.1:8000/",
+      "name": "ChristmassAndNewYear",
       "description": "Créez des cartes et affiches de Noël & Nouvel An — lettres, cadres photo, listes cadeaux, templates et partage.",
       "publisher": {
         "@id": "http://127.0.0.1:8000/#organization"
