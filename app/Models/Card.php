@@ -35,7 +35,7 @@ class Card extends Model
 
     public function getWhatsAppMessageAttribute()
     {
-        return "🎊 Bonjour {$this->to_name}! {$this->from_name} vous a envoyé une carte de vœux pour le Nouvel An! 🎁\n\nCliquez sur ce lien pour découvrir votre carte personnalisée:\n{$this->share_link}\n\n{$this->emoji} Bonne Année 2025! {$this->emoji}";
+        return "🎊 Bonjour {$this->to_name}! {$this->from_name} vous a envoyé une carte de vœux pour le Nouvel An! 🎁\n\nCliquez sur ce lien pour découvrir votre carte personnalisée:\n{$this->share_link}\n\n{$this->emoji} Bonne Année 2026! {$this->emoji}";
     }
 
     public function getTemplateClassAttribute()

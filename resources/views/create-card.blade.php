@@ -588,7 +588,7 @@
                     <!-- Titre du message -->
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-star"></i> Titre de vos vœux</label>
-                        <input type="text" class="form-input" id="cardTitle" placeholder="Ex: Meilleurs vœux pour 2025!" required>
+                        <input type="text" class="form-input" id="cardTitle" placeholder="Ex: Meilleurs vœux pour 2026!" required>
                     </div>
                     
                     <!-- Message principal -->
@@ -672,7 +672,7 @@
                 
                 <div class="card-preview template-classique" id="cardPreview">
                     <div class="preview-header">
-                        <h3 class="preview-title" id="previewTitle">Meilleurs vœux pour 2025!</h3>
+                        <h3 class="preview-title" id="previewTitle">Meilleurs vœux pour 2026!</h3>
                         <div class="preview-fromto">
                             <span id="previewFrom">De: Marie</span> • 
                             <span id="previewTo">Pour: Maman</span>
@@ -687,7 +687,7 @@
                     </div>
                     
                     <div class="preview-footer" id="previewFooter">
-                        Bonne Année 2025!
+                        Bonne Année 2026!
                     </div>
                 </div>
                 
@@ -849,7 +849,7 @@
             
             // Mettre à jour le contenu
             document.getElementById('previewTitle').textContent = 
-                document.getElementById('cardTitle').value || 'Meilleurs vœux pour 2025!';
+                document.getElementById('cardTitle').value || 'Meilleurs vœux pour 2026!';
             
             document.getElementById('previewFrom').textContent = 
                 'De: ' + (document.getElementById('fromName').value || 'Vous');
@@ -872,7 +872,7 @@
         document.getElementById('fullPreviewBtn').addEventListener('click', function() {
             const from = document.getElementById('fromName').value || 'Vous';
             const to = document.getElementById('toName').value || 'Destinataire';
-            const title = document.getElementById('cardTitle').value || 'Meilleurs vœux pour 2025!';
+            const title = document.getElementById('cardTitle').value || 'Meilleurs vœux pour 2026!';
             const message = document.getElementById('cardMessage').value || 
                 'Que cette nouvelle année vous apporte bonheur, santé et succès dans tous vos projets!';
             
@@ -893,7 +893,7 @@
                     </div>
                     
                     <div class="preview-footer" style="font-size: 2.2rem;">
-                        Bonne Année 2025! 🎊
+                        Bonne Année 2026! 🎊
                     </div>
                 </div>
             `;
@@ -1038,7 +1038,7 @@
         }
         
         function sendWhatsApp(link, phone, cardData) {
-            const message = `🎊 Bonjour ${cardData.to}! ${cardData.from} vous a envoyé une carte de vœux pour le Nouvel An! 🎁\n\nCliquez sur ce lien pour découvrir votre carte personnalisée:\n${link}\n\n${cardData.emoji} Bonne Année 2025! ${cardData.emoji}`;
+            const message = `🎊 Bonjour ${cardData.to}! ${cardData.from} vous a envoyé une carte de vœux pour le Nouvel An! 🎁\n\nCliquez sur ce lien pour découvrir votre carte personnalisée:\n${link}\n\n${cardData.emoji} Bonne Année 2026! ${cardData.emoji}`;
             
             const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;

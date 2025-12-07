@@ -829,8 +829,8 @@
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-calendar"></i> Année</label>
                         <select class="form-select" id="posterYear">
-                            <option value="2024">2024</option>
-                            <option value="2025" selected>2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2026" selected>2026</option>
                             <option value="2026">2026</option>
                         </select>
                     </div>

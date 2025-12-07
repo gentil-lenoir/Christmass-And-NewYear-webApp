@@ -791,7 +791,7 @@
                     
                     <div class="form-group">
                         <label class="form-label"><i class="fas fa-tree"></i> Titre de la liste</label>
-                        <input type="text" class="form-input" id="listTitle" placeholder="Ex: Mes souhaits pour Noël 2024" required>
+                        <input type="text" class="form-input" id="listTitle" placeholder="Ex: Mes souhaits pour Noël 2026" required>
                     </div>
                     
                     <div class="form-group">

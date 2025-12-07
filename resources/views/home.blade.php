@@ -1446,7 +1446,7 @@
         <header class="header">
             <h1 class="logo">Joyeuxde Noël</h1>
             <div class="noel-badge">
-                <i class="fas fa-gift"></i> Joyeuses Fêtes 2024 <i class="fas fa-star"></i>
+                <i class="fas fa-gift"></i> Joyeuses Fêtes 2026 <i class="fas fa-star"></i>
             </div>
             <p class="sous-titre">
                 Créez des souvenirs magiques ! Concoctez de magnifiques affiches, cartes de vœux et messages festifs 
@@ -1584,8 +1584,8 @@
             </div>
             
             <p class="copyright">
-                &copy; 2024 Joyeuxde Noël. Tous droits réservés. 
-                <br>🎄 Joyeux Noël 2025 et Bonne Année 2026 ! 🥂
+                &copy; 2026 Joyeuxde Noël. Tous droits réservés. 
+                <br>🎄 Joyeux Noël 2026 et Bonne Année 2026 ! 🥂
             </p>
         </footer>
     </div>
