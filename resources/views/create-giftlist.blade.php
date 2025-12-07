@@ -835,7 +835,7 @@
                             <div style="font-size: 0.9rem; color: #7a6a6a;">Cadeaux</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: 700; color: var(--vert-noel);" id="totalPrice">0€</div>
+                            <div style="font-size: 2rem; font-weight: 700; color: var(--vert-noel);" id="totalPrice">0$</div>
                             <div style="font-size: 0.9rem; color: #7a6a6a;">Total</div>
                         </div>
                     </div>
@@ -935,7 +935,7 @@
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label class="form-label"><i class="fas fa-euro-sign"></i> Prix estimé (€)</label>
+                                <label class="form-label"><i class="fas fa-euro-sign"></i> Prix estimé ($)</label>
                                 <input type="number" class="form-input" id="giftPrice" placeholder="Ex: 99.99" step="0.01" min="0">
                             </div>
                             
@@ -1261,7 +1261,7 @@
                     <div class="gift-body">
                         ${gift.price > 0 ? `
                             <div class="gift-price">
-                                <i class="fas fa-euro-sign"></i> ${gift.price.toFixed(2)}€
+                                <i class="fas fa-euro-sign"></i> ${gift.price.toFixed(2)}$
                                 ${gift.store ? `<span style="font-size: 0.9rem; color: #7a6a6a;">• ${gift.store}</span>` : ''}
                             </div>
                         ` : ''}
@@ -1385,7 +1385,7 @@
             const lowCount = gifts.filter(g => g.priority === 'low').length;
             
             document.getElementById('giftCount').textContent = giftCount;
-            document.getElementById('totalPrice').textContent = totalPrice.toFixed(2) + '€';
+            document.getElementById('totalPrice').textContent = totalPrice.toFixed(2) + '$';
             document.getElementById('highCount').textContent = highCount;
             document.getElementById('mediumCount').textContent = mediumCount;
             document.getElementById('lowCount').textContent = lowCount;
@@ -1474,7 +1474,7 @@
                     ${gifts.map(gift => `
                         <div class="gift priority-${gift.priority}">
                             <h3>${gift.name}</h3>
-                            ${gift.price > 0 ? `<p class="price">${gift.price.toFixed(2)}€</p>` : ''}
+                            ${gift.price > 0 ? `<p class="price">${gift.price.toFixed(2)}$</p>` : ''}
                             ${gift.store ? `<p><strong>Magasin:</strong> ${gift.store}</p>` : ''}
                             ${gift.notes ? `<p>${gift.notes}</p>` : ''}
                             ${gift.link ? `<p><a href="${gift.link}">Lien du produit</a></p>` : ''}
@@ -1482,7 +1482,7 @@
                         </div>
                     `).join('')}
                     <hr>
-                    <p><strong>Total:</strong> ${gifts.reduce((sum, g) => sum + (g.price || 0), 0).toFixed(2)}€</p>
+                    <p><strong>Total:</strong> ${gifts.reduce((sum, g) => sum + (g.price || 0), 0).toFixed(2)}$</p>
                     <p><strong>Nombre de cadeaux:</strong> ${gifts.length}</p>
                     <p>Imprimé le ${new Date().toLocaleDateString('fr-FR')}</p>
                 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joyeuxde Noël - Créez vos Souhaits Festifs</title>
+    <title>Joyeux Noël et Nouvel An - Créez vos Souhaits Festifs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
     <style>
@@ -1444,7 +1444,7 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1 class="logo">Joyeuxde Noël</h1>
+            <h1 class="logo">Joyeux Noël et Nouvel An</h1>
             <div class="noel-badge">
                 <i class="fas fa-gift"></i> Joyeuses Fêtes 2026 <i class="fas fa-star"></i>
             </div>
@@ -1486,7 +1486,7 @@
                     Créez une affiche festive avec vos noms, photos et souhaits. Parfait pour les couples, 
                     familles ou messages de vœux professionnels.
                 </p>
-                <a href="#" class="btn-option magical-button">
+                <a href="/create-poster" class="btn-option magical-button">
                     <i class="fas fa-palette"></i> <span>Créer une Affiche</span>
                 </a>
             </div>
@@ -1501,7 +1501,7 @@
                     Partagez votre liste de souhaits de Noël avec un design adorable. 
                     Ajoutez des images, des liens et des notes pour chaque cadeau rêvé.
                 </p>
-                <a href="#" class="btn-option magical-button">
+                <a href="/create-giftlist" class="btn-option magical-button">
                     <i class="fas fa-list-ul"></i> <span>Faire ma Liste</span>
                 </a>
             </div>
@@ -1569,7 +1569,7 @@
         
         <!-- Footer -->
         <footer class="footer">
-            <h3 class="footer-logo">Joyeuxde Noël</h3>
+            <h3 class="footer-logo">Joyeux Noël et Nouvel An</h3>
             <p class="footer-text">
                 Un projet fait avec ❤️ pour rendre les fêtes encore plus spéciales. 
                 Partagez l'amour, la joie et la magie de Noël avec tous vos proches.
@@ -1584,8 +1584,9 @@
             </div>
             
             <p class="copyright">
-                &copy; 2026 Joyeuxde Noël. Tous droits réservés. 
+                &copy; 2026 Joyeux Noël et Nouvel An. Tous droits réservés. 
                 <br>🎄 Joyeux Noël 2026 et Bonne Année 2026 ! 🥂
+                <br> Developpé et Programmé par <a href="https://gentil-lenoir.vercel.app" target="_blank" rel="noopener noreferrer">Gntil Le NoiR MaliyaMungu</a>
             </p>
         </footer>
     </div>
@@ -1688,10 +1689,15 @@
             button.addEventListener('mouseenter', function(e) {
                 createSparkles(e.pageX, e.pageY);
             });
-            
+
             button.addEventListener('click', function(e) {
-                e.preventDefault();
-                createBurst(e.pageX, e.pageY);
+                const href = button.getAttribute('href');
+                // Only prevent default for placeholder links (#) or anchor links
+                if (href === '#' || href.startsWith('#')) {
+                    e.preventDefault();
+                    createBurst(e.pageX, e.pageY);
+                }
+                // For real navigation links (starting with /), allow default behavior
             });
         });
         

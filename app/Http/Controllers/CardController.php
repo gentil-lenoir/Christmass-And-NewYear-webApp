@@ -93,4 +93,15 @@ class CardController extends Controller
             'message' => 'Cartes synchronisées avec succès'
         ]);
     }
+
+    public function share($id, Request $request)
+    {
+        $card = Card::where('unique_id', $id)->firstOrFail();
+        $card->increment('shares');
+
+        return response()->json([
+            'success' => true,
+            'shares' => $card->shares
+        ]);
+    }
 }

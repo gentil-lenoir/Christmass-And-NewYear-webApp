@@ -562,7 +562,7 @@
                         <div class="bg-name">Vintage</div>
                     </div>
                     
-                    <div class="bg-option" data-bg="bg-noel">
+                    {{-- <div class="bg-option" data-bg="bg-noel">
                         <div class="bg-preview bg-noel"></div>
                         <div class="bg-name">Noël Vert</div>
                     </div>
@@ -570,17 +570,17 @@
                     <div class="bg-option" data-bg="bg-neige">
                         <div class="bg-preview bg-neige"></div>
                         <div class="bg-name">Neige</div>
-                    </div>
+                    </div> --}}
                     
                     <div class="bg-option" data-bg="bg-or">
                         <div class="bg-preview bg-or"></div>
                         <div class="bg-name">Doré</div>
                     </div>
                     
-                    <div class="bg-option" data-bg="bg-etoile">
+                    {{-- <div class="bg-option" data-bg="bg-etoile">
                         <div class="bg-preview bg-etoile"></div>
                         <div class="bg-name">Étoilé</div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             

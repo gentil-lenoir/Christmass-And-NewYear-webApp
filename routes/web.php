@@ -20,6 +20,7 @@ Route::get('/create-card', [CardController::class, 'create'])->name('cards.creat
 Route::post('/cards', [CardController::class, 'store'])->name('cards.store');
 Route::get('/card/{id}', [CardController::class, 'show'])->name('cards.show');
 Route::get('/cards', [CardController::class, 'index'])->name('cards.index');
+Route::post('/card/{id}/share', [CardController::class, 'share'])->name('cards.share');
 
 Route::post('/api/cards/sync', [CardController::class, 'syncFromLocalStorage']);
 
