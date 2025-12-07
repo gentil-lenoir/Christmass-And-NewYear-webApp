@@ -11,6 +11,7 @@ Route::get('/create-letter', [LetterController::class, 'create'])->name('letters
 Route::post('/letters', [LetterController::class, 'store'])->name('letters.store');
 Route::get('/letter/{id}', [LetterController::class, 'show'])->name('letters.show');
 Route::get('/letters', [LetterController::class, 'index'])->name('letters.index');
+Route::post('/letter/{id}/share', [LetterController::class, 'share'])->name('letters.share');
 
 Route::post('/api/letters/sync', [LetterController::class, 'syncFromLocalStorage']);
 

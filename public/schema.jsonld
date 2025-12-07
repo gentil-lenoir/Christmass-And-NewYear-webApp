@@ -1,0 +1,24 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "http://127.0.0.1:8000/#organization",
+      "name": "BlocPlan",
+      "url": "http://127.0.0.1:8000/",
+      "sameAs": [],
+      "logo": "http://127.0.0.1:8000/images/logo.png",
+      "description": "Application pour créer et partager des cartes et affiches de Noël et Nouvel An."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "http://127.0.0.1:8000/#website",
+      "url": "http://127.0.0.1:8000/",
+      "name": "BlocPlan",
+      "description": "Créez des cartes et affiches de Noël & Nouvel An — lettres, cadres photo, listes cadeaux, templates et partage.",
+      "publisher": {
+        "@id": "http://127.0.0.1:8000/#organization"
+      }
+    }
+  ]
+}

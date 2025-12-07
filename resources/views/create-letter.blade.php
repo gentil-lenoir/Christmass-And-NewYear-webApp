@@ -757,9 +757,12 @@
         // ===== SAUVEGARDE & ENVOI =====
         document.getElementById('letterForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             // ... validation ...
-            
+
+            const countryCode = document.getElementById('countryCode').value;
+            const phone = document.getElementById('recipientPhone').value;
+
             const letterData = {
                 id: 'letter_' + Date.now(), // ID local
                 from: document.getElementById('fromName').value,

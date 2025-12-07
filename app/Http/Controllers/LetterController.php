@@ -98,4 +98,17 @@ public function store(Request $request)
             'message' => 'Lettres synchronisées avec succès'
         ]);
     }
+
+    // Incrémenter les partages
+    public function share($id, Request $request)
+    {
+        $letter = Letter::where('unique_id', $id)->firstOrFail();
+        $letter->increment('shares');
+
+        return response()->json([
+            'success' => true,
+            'shares' => $letter->shares
+        ]);
+    }
+
 }
