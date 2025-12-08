@@ -1277,6 +1277,8 @@
     </style>
 </head>
 <body>
+    @component('components.ads.popunder')
+    @endcomponent
     <!-- Guirlandes de Noël lumineuses -->
     <div class="christmas-lights">
         <div class="light"></div>
@@ -1323,6 +1325,8 @@
             <h1 class="logo">Joyeux Noël et Nouvel An</h1>
             <div class="noel-badge">
                 <i class="fas fa-gift"></i> Joyeuses Fêtes 2026 <i class="fas fa-star"></i>
+                    @component('components.ads.smartlink')
+                    @endcomponent
             </div>
             <p class="sous-titre">
                 Créez des souvenirs magiques ! Concoctez de magnifiques affiches, cartes de vœux et messages festifs 
@@ -1341,6 +1345,8 @@
             <div class="option-card">
                 <div class="option-icon">
                     <i class="fas fa-scroll"></i>
+                    @component('components.ads.smartlink')
+                    @endcomponent
                 </div>
                 <h3 class="option-titre">Lettre de Noël</h3>
                 <p class="option-description">
@@ -1355,6 +1361,8 @@
             <div class="option-card">
                 <div class="option-icon">
                     <i class="fas fa-ad"></i>
+                    @component('components.ads.smartlink')
+                    @endcomponent
                 </div>
 
                     @component('components.ads.banners.banner-160x300')
@@ -1369,6 +1377,8 @@
             <div class="option-card">
                 <div class="option-icon">
                     <i class="fas fa-images"></i>
+                    @component('components.ads.smartlink')
+                    @endcomponent
                 </div>
                 <h3 class="option-titre">Affiche Personnalisée</h3>
                 <p class="option-description">
@@ -1384,6 +1394,8 @@
             <div class="option-card">
                 <div class="option-icon">
                     <i class="fas fa-gifts"></i>
+                    @component('components.ads.smartlink')
+                    @endcomponent
                 </div>
                 <h3 class="option-titre">Liste de Cadeaux</h3>
                 <p class="option-description">
@@ -1398,6 +1410,8 @@
             <div class="option-card">
                 <div class="option-icon">
                     <i class="fas fa-ad"></i>
+                    @component('components.ads.smartlink')
+                    @endcomponent
                 </div>
 
                     @component('components.ads.banners.banner-160x300')
@@ -1412,6 +1426,8 @@
             <div class="option-card">
                 <div class="option-icon">
                     <i class="fas fa-heart"></i>
+                    @component('components.ads.smartlink')
+                    @endcomponent
                 </div>
                 <h3 class="option-titre">Carte de Vœux</h3>
                 <p class="option-description">

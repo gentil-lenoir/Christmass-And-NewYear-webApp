@@ -1,5 +1,8 @@
 <!-- Footer -->
 <footer class="footer">
+    @component('components.ads.social-bar')
+    @endcomponent
+    
     <h3 class="footer-logo">Joyeux Noël et Nouvel An</h3>
     <p class="footer-text">
         Un projet fait avec ❤️ pour rendre les fêtes encore plus spéciales. 

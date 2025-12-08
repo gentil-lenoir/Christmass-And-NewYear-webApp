@@ -1198,7 +1198,6 @@
             }
             
             localStorage.setItem('christmasCards', JSON.stringify(cards));
-            console.log('Carte sauvegardée localement:', data.id);
         }
         
         async function saveToBackend(data) {

@@ -1004,7 +1004,6 @@
             }
             
             localStorage.setItem('christmasLetters', JSON.stringify(letters));
-            console.log('Lettre sauvegardée localement:', data.id);
             
             // Tenter une synchronisation immédiate
             setTimeout(syncUnsentLetters, 1000);
@@ -1038,9 +1037,7 @@
                     });
                     
                     localStorage.setItem('christmasLetters', JSON.stringify(letters));
-                    
-                    console.log(`${data.synced_count} lettres synchronisées`);
-                    
+                                        
                     // Afficher une notification si nécessaire
                     if (data.synced_count > 0) {
                         showNotification(`${data.synced_count} lettre(s) sauvegardée(s) en ligne`, 'success');

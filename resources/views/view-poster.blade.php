@@ -1468,9 +1468,6 @@
             
             showNotification('Commande envoyée! Vous recevrez un email de confirmation.', 'success');
             document.getElementById('orderModal').style.display = 'none';
-            
-            // Ici, vous enverriez la commande au backend
-            console.log('Commande:', { format, frame, posterId });
         });
         
         document.getElementById('cancelOrderBtn').addEventListener('click', function() {

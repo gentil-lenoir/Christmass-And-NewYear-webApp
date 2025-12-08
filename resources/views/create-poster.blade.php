@@ -2061,7 +2061,6 @@
                 img.src = lastPoster;
             }
             
-            console.log('✨ Créateur d\'affiche initialisé!');
             showNotification('Bienvenue! Créez votre affiche personnalisée 🎨', 'success');
         });
 
