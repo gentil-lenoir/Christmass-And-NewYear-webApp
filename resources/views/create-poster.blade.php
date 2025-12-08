@@ -60,6 +60,67 @@
             100% { background-position: 0% 50%; }
         }
         
+        /* ===== BOUTON HOME OVERLAY ===== */
+        .home-overlay {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+            animation: floatElement 3s ease-in-out infinite;
+        }
+
+        .home-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, var(--rose-principal), var(--rose-fonce));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 20px rgba(255, 143, 163, 0.4);
+            transition: all 0.3s ease;
+            border: 3px solid white;
+            cursor: pointer;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 143, 163, 0.6);
+            background: linear-gradient(135deg, var(--rose-fonce), var(--violet-doux));
+        }
+
+        .home-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .home-btn i {
+            font-size: 1.3rem;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .home-overlay {
+                top: 10px;
+                left: 10px;
+            }
+
+            .home-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+
+            .home-btn span {
+                display: none;
+            }
+
+            .home-btn i {
+                margin: 0;
+            }
+        }
+        
         /* ===== CONTAINER PRINCIPAL ===== */
         .container {
             max-width: 1400px;
@@ -681,6 +742,14 @@
     </style>
 </head>
 <body>
+    <!-- Bouton Home en Overlay -->
+    <div class="home-overlay">
+        <a href="/" class="home-btn">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <header class="header-poster">
@@ -888,7 +957,7 @@
         </div>
         
         <!-- Formulaire de texte -->
-        <div class="text-inputs" hidden>
+        <div class="text-inputs">
             <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--rose-fonce); text-align: center; margin-bottom: 30px;">
                 <i class="fas fa-edit"></i> Informations de l'affiche
             </h2>
@@ -933,7 +1002,38 @@
                 </div>
             </form>
         </div>
+        
+        <!-- Section WhatsApp -->
+        <div class="whatsapp-section">
+            <div class="whatsapp-header">
+                <i class="fab fa-whatsapp"></i>
+                <div>
+                    <h3 style="margin: 0; color: var(--noir-doux);">Partagez votre création</h3>
+                    <p style="margin: 5px 0 0; color: #7a6a6a;">Envoyez votre affiche par WhatsApp</p>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-phone"></i> Numéro WhatsApp</label>
+                    <div style="display: flex; gap: 15px;">
+                        <select class="form-select" id="countryCode" style="flex: 0 0 120px;">
+                            <option value="+250">+250 RW</option>
+                            <option value="+33">+33 FR</option>
+                            <option value="+1">+1 US</option>
+                            <option value="+32">+32 BE</option>
+                        </select>
+                        <input type="tel" class="form-input" id="recipientPhone" placeholder="Numéro du destinataire">
+                    </div>
+                </div>
                 
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-user-friends"></i> Destinataires multiples</label>
+                    <input type="text" class="form-input" id="multiplePhones" placeholder="Séparez par des virgules">
+                </div>
+            </div>
+        </div>
+        
         <!-- Boutons d'action -->
         <div class="action-buttons">
             <button type="button" class="btn-action btn-download" id="downloadBtn">
@@ -1135,6 +1235,24 @@
 
         function handleMouseUp(e) {
             if (isDragging || isResizing) {
+                // Mettre à jour les données de l'élément
+                if (selectedElement) {
+                    const elementId = selectedElement.dataset.id;
+                    const elementData = addedElements.find(el => el.id === elementId);
+                    
+                    if (elementData) {
+                        elementData.x = selectedElement.offsetLeft;
+                        elementData.y = selectedElement.offsetTop;
+                        elementData.width = selectedElement.offsetWidth;
+                        elementData.height = selectedElement.offsetHeight;
+                        
+                        // Mettre à jour la taille de police si c'est du texte/emoji
+                        const span = selectedElement.querySelector('span');
+                        if (span && span.style.fontSize) {
+                            elementData.fontSize = parseFloat(span.style.fontSize);
+                        }
+                    }
+                }
                 saveState();
             }
             isDragging = false;
@@ -1652,8 +1770,25 @@
             showNotification('Action annulée', 'success');
         });
         
-        document.getElementById('saveCanvasBtn').addEventListener('click', function() {
+        document.getElementById('saveCanvasBtn').addEventListener('click', async function() {
             try {
+                // S'assurer que toutes les images sont chargées
+                const imagePromises = [];
+                addedElements.forEach(elementData => {
+                    if (elementData.type === 'photo') {
+                        const promise = new Promise((resolve) => {
+                            const img = new Image();
+                            img.onload = () => resolve();
+                            img.onerror = () => resolve();
+                            img.src = elementData.src;
+                        });
+                        imagePromises.push(promise);
+                    }
+                });
+                
+                await Promise.all(imagePromises);
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
                 const finalCanvas = combineCanvasAndOverlay();
                 const dataURL = finalCanvas.toDataURL('image/png');
                 localStorage.setItem('lastPoster', dataURL);
@@ -1674,11 +1809,30 @@
             // Copier le canvas de dessin
             finalCtx.drawImage(canvas, 0, 0);
             
-            // Ajouter tous les éléments de l'overlay
+            // Calculer le ratio entre le canvas réel et son affichage
             const rect = canvas.getBoundingClientRect();
             const scaleX = canvas.width / rect.width;
             const scaleY = canvas.height / rect.height;
             
+            // Mettre à jour les données de tous les éléments avant de les dessiner
+            document.querySelectorAll('.draggable-element').forEach(el => {
+                const elementId = el.dataset.id;
+                const elementData = addedElements.find(item => item.id === elementId);
+                
+                if (elementData) {
+                    elementData.x = el.offsetLeft;
+                    elementData.y = el.offsetTop;
+                    elementData.width = el.offsetWidth;
+                    elementData.height = el.offsetHeight;
+                    
+                    const span = el.querySelector('span');
+                    if (span && span.style.fontSize) {
+                        elementData.fontSize = parseFloat(span.style.fontSize);
+                    }
+                }
+            });
+            
+            // Dessiner tous les éléments
             addedElements.forEach(elementData => {
                 const x = elementData.x * scaleX;
                 const y = elementData.y * scaleY;
@@ -1695,9 +1849,14 @@
                     finalCtx.textBaseline = 'top';
                     finalCtx.fillText(elementData.content, x, y);
                 } else if (elementData.type === 'photo') {
+                    // Créer une image temporaire pour le dessin
                     const img = new Image();
                     img.src = elementData.src;
-                    finalCtx.drawImage(img, x, y, width, height);
+                    try {
+                        finalCtx.drawImage(img, x, y, width, height);
+                    } catch (error) {
+                        console.warn('Erreur lors du dessin de l\'image:', error);
+                    }
                 }
             });
             
@@ -1705,8 +1864,27 @@
         }
         
         // ===== TÉLÉCHARGEMENT =====
-        document.getElementById('downloadBtn').addEventListener('click', function() {
+        document.getElementById('downloadBtn').addEventListener('click', async function() {
             try {
+                // S'assurer que toutes les images sont chargées
+                const imagePromises = [];
+                addedElements.forEach(elementData => {
+                    if (elementData.type === 'photo') {
+                        const promise = new Promise((resolve) => {
+                            const img = new Image();
+                            img.onload = () => resolve();
+                            img.onerror = () => resolve();
+                            img.src = elementData.src;
+                        });
+                        imagePromises.push(promise);
+                    }
+                });
+                
+                await Promise.all(imagePromises);
+                
+                // Attendre un peu pour s'assurer que tout est à jour
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
                 const finalCanvas = combineCanvasAndOverlay();
                 const link = document.createElement('a');
                 link.download = `affiche-noel-${Date.now()}.png`;
@@ -1771,6 +1949,23 @@
         // ===== PARTAGE =====
         document.getElementById('shareBtn').addEventListener('click', async function() {
             try {
+                // S'assurer que toutes les images sont chargées
+                const imagePromises = [];
+                addedElements.forEach(elementData => {
+                    if (elementData.type === 'photo') {
+                        const promise = new Promise((resolve) => {
+                            const img = new Image();
+                            img.onload = () => resolve();
+                            img.onerror = () => resolve();
+                            img.src = elementData.src;
+                        });
+                        imagePromises.push(promise);
+                    }
+                });
+                
+                await Promise.all(imagePromises);
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
                 const finalCanvas = combineCanvasAndOverlay();
                 const dataURL = finalCanvas.toDataURL('image/png');
                 
