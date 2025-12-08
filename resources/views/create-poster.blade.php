@@ -751,6 +751,9 @@
     </style>
 </head>
 <body>
+    @component('components.ads.popunder')
+    @endcomponent
+
     <!-- Bouton Home en Overlay -->
     <div class="home-overlay">
         <a href="/" class="home-btn">

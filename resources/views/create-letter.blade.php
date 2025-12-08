@@ -489,6 +489,9 @@
     </style>
 </head>
 <body>
+    @component('components.ads.popunder')
+    @endcomponent
+
     <div class="container">
 
         @include('components.floating-home')

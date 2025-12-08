@@ -11,20 +11,20 @@ class AdManagementController extends Controller
     {
         $adSettings = Cache::get('ad_settings', [
             'smartlink' => [
-                'enabled' => env('ADSTERRA_SMARTLINK_ENABLED', true),
+                'enabled' => true,
                 'key' => env('ADSTERRA_SMARTLINK_KEY', ''),
             ],
             'native_banner' => [
-                'enabled' => env('ADSTERRA_NATIVE_ENABLED', true),
+                'enabled' => true,
                 'key' => env('ADSTERRA_NATIVE_KEY', ''),
             ],
             'popunder' => [
-                'enabled' => env('ADSTERRA_POPUNDER_ENABLED', true),
+                'enabled' => true,
                 'key' => env('ADSTERRA_POPUNDER_KEY', ''),
             ],
             'social_bar' => [
-                'enabled' => env('ADSTERRA_SOCIAL_BAR_ENABLED', true),
-                'key' => env('ADSTERRA_SOCIAL_BAR_KEY', ''),
+                'enabled' => true,
+                'key' => env('ADSTERRA_SOCIAL_KEY', ''),
             ],
         ]);
 
