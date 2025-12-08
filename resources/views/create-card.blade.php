@@ -970,7 +970,6 @@
             </div>
         </div>
 
-
     <x-footer></x-footer>
     
     <script>

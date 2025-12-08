@@ -37,6 +37,15 @@
             overflow-x: hidden;
             position: relative;
         }
+
+        /* ===== ADS ROW STYLES ===== */
+        .ad-row{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
         
         /* ===== ANIMATIONS ===== */
         @keyframes floatElement {
@@ -756,7 +765,16 @@
             <h1 class="poster-title">AFFICHE PERSONNALISÉE</h1>
             <p class="poster-subtitle">Créez votre chef-d'œuvre festif unique</p>
         </header>
-        
+        <div class="ad-row">
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+        </div>
         <!-- Container principal -->
         <div class="creation-container">
             <!-- Sidebar gauche - Outils -->
@@ -955,6 +973,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="ad-row">
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+        </div>
         
         <!-- Formulaire de texte -->
         <div class="text-inputs">
@@ -1002,38 +1031,17 @@
                 </div>
             </form>
         </div>
-        
-        <!-- Section WhatsApp -->
-        <div class="whatsapp-section">
-            <div class="whatsapp-header">
-                <i class="fab fa-whatsapp"></i>
-                <div>
-                    <h3 style="margin: 0; color: var(--noir-doux);">Partagez votre création</h3>
-                    <p style="margin: 5px 0 0; color: #7a6a6a;">Envoyez votre affiche par WhatsApp</p>
-                </div>
+        <div class="ad-row">
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
             </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label"><i class="fas fa-phone"></i> Numéro WhatsApp</label>
-                    <div style="display: flex; gap: 15px;">
-                        <select class="form-select" id="countryCode" style="flex: 0 0 120px;">
-                            <option value="+250">+250 RW</option>
-                            <option value="+33">+33 FR</option>
-                            <option value="+1">+1 US</option>
-                            <option value="+32">+32 BE</option>
-                        </select>
-                        <input type="tel" class="form-input" id="recipientPhone" placeholder="Numéro du destinataire">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label"><i class="fas fa-user-friends"></i> Destinataires multiples</label>
-                    <input type="text" class="form-input" id="multiplePhones" placeholder="Séparez par des virgules">
-                </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
             </div>
         </div>
-        
+  
         <!-- Boutons d'action -->
         <div class="action-buttons">
             <button type="button" class="btn-action btn-download" id="downloadBtn">
@@ -1059,13 +1067,36 @@
             </a>
         </footer>
     </div>
+
+        <div class="ad-row">
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+        </div>
     
     <!-- Notification -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
         <span id="notificationText">Opération réussie!</span>
     </div>
-    
+    <div class="ad-row">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
+    <x-footer></x-footer>
+
     <script>
         // ===== VARIABLES GLOBALES =====
         let canvas, ctx, canvasOverlay;
