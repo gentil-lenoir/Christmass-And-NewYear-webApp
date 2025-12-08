@@ -1,8 +1,3 @@
-### TO DO
-
-adding ADSTERRA
-adding SMARTLINKS
-
 <?php
 
 namespace App\Http\Controllers;
