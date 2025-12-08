@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <x-seo></x-seo>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joyeux Noël et Nouvel An - Créez vos Souhaits Festifs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -168,6 +169,15 @@
             font-size: 75px;
             animation-delay: 18s;
             animation-duration: 23s;
+        }
+
+        .ad-row{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap
         }
         
         @keyframes floatFlower {
@@ -1341,6 +1351,19 @@
                     <i class="fas fa-pen-fancy"></i> <span>Écrire une Lettre</span>
                 </a>
             </div>
+
+            <div class="option-card">
+                <div class="option-icon">
+                    <i class="fas fa-ad"></i>
+                </div>
+
+                    @component('components.ads.banners.banner-160x300')
+                    @endcomponent
+
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="btn-option magical-button">
+                    <i class="fas fa-eye"></i> <span>Visiter cette publicité</span>
+                </a>
+            </div>
             
             <!-- Option 2 -->
             <div class="option-card">
@@ -1371,6 +1394,19 @@
                     <i class="fas fa-list-ul"></i> <span>Faire ma Liste</span>
                 </a>
             </div>
+
+            <div class="option-card">
+                <div class="option-icon">
+                    <i class="fas fa-ad"></i>
+                </div>
+
+                    @component('components.ads.banners.banner-160x300')
+                    @endcomponent
+
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="btn-option magical-button">
+                    <i class="fas fa-eye"></i> <span>Visiter cette publicité</span>
+                </a>
+            </div>
             
             <!-- Option 4 -->
             <div class="option-card">
@@ -1389,35 +1425,55 @@
         </div>
         
         <!-- Section Galerie d'Exemples -->
-        <h2 class="section-titre">Inspirez-vous de Nos Créations</h2>
+        <h2 class="section-titre">Inspirez-vous de Nos Publicités</h2>
         
         <div class="galerie">
             <div class="exemple-card">
                 <div class="exemple-image">
-                    <i class="fas fa-heart"></i>
+                    @component('components.ads.banners.banner-300x250')
+                    @endcomponent
                 </div>
-                <div class="exemple-titre">Carte Couple Étoilée</div>
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="exemple-titre">Carte Couple Étoilée</a>
             </div>
             
             <div class="exemple-card">
                 <div class="exemple-image">
-                    <i class="fas fa-tree"></i>
+                    @component('components.ads.banners.banner-160x300')
+                    @endcomponent
                 </div>
-                <div class="exemple-titre">Affiche Familiale de Noël</div>
+                <a href="https://www.effectivegatecpm.com/absjb07064?key=5258d3aa02a1038dea64f8e63a8cd16b" target="_blank" class="exemple-titre">Affiche Familiale de Noël</a>
             </div>
             
             <div class="exemple-card">
                 <div class="exemple-image">
-                    <i class="fas fa-snowflake"></i>
+                    @component('components.ads.banners.banner-300x250')
+                    @endcomponent
                 </div>
-                <div class="exemple-titre">Vœux Nouvel An Élégants</div>
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="exemple-titre">Vœux Nouvel An Élégants</a>
             </div>
             
             <div class="exemple-card">
                 <div class="exemple-image">
-                    <i class="fas fa-candy-cane"></i>
+                    @component('components.ads.banners.banner-160x300')
+                    @endcomponent
                 </div>
-                <div class="exemple-titre">Lettre Enfantine Joyeuse</div>
+                <a href="https://www.effectivegatecpm.com/absjb07064?key=5258d3aa02a1038dea64f8e63a8cd16b" target="_blank" class="exemple-titre">Lettre Enfantine Joyeuse</a>
+            </div>
+        
+            <div class="exemple-card">
+                <div class="exemple-image">
+                    @component('components.ads.banners.banner-300x250')
+                    @endcomponent
+                </div>
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="exemple-titre">Carte Couple Étoilée</a>
+            </div>
+            
+            <div class="exemple-card">
+                <div class="exemple-image">
+                    @component('components.ads.banners.banner-160x300')
+                    @endcomponent
+                </div>
+                <a href="https://www.effectivegatecpm.com/absjb07064?key=5258d3aa02a1038dea64f8e63a8cd16b" target="_blank" class="exemple-titre">Affiche Familiale de Noël</a>
             </div>
         </div>
         
@@ -1428,9 +1484,28 @@
                 Rejoignez des milliers de personnes qui partagent déjà la joie des fêtes 
                 avec des créations personnalisées. C'est gratuit, simple et tellement amusant !
             </p>
-            <a href="#" class="btn-cta magical-button">
+            <a href="/create-giftlist" class="btn-cta magical-button">
                 <i class="fas fa-sparkles"></i> Créer ma Première Cadeau
             </a>
+        </div>
+
+        @component('components.ads.banners.banner-728x90')
+        @endcomponent
+
+        <div class="ad-row">
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+
         </div>
         <x-footer></x-footer>
     </div>

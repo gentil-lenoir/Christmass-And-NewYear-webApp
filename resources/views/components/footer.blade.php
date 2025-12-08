@@ -140,7 +140,7 @@
         }
         
         .social-icon:hover {
-            color: white;
+            color: black;
             transform: translateY(-8px) scale(1.15) rotate(360deg);
             box-shadow: 
                 0 10px 25px rgba(255, 105, 180, 0.5),

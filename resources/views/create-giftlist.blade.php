@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <x-seo></x-seo>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ma Liste de Cadeaux de Noël - Féérie de Noël</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -36,6 +37,23 @@
             overflow-x: hidden;
             position: relative;
         }
+
+        /* ===== ADS ROW STYLES ===== */
+        .ad-row2{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap
+        }
+
+        @media (max-width: 605px) {
+            .ad-row{
+                gap: 5px;
+            }
+        }
+
         
         /* ===== ANIMATIONS ===== */
         @keyframes giftFloat {
@@ -763,6 +781,9 @@
     </style>
 </head>
 <body>
+
+    @include('components.floating-home')
+
     <!-- Cadeaux flottants décoratifs -->
     <div class="floating-gift gift-1">🎁</div>
     <div class="floating-gift gift-2">🎀</div>
@@ -776,7 +797,18 @@
             <h1 class="giftlist-title">Ma Liste Magique</h1>
             <p class="giftlist-subtitle">Partagez vos rêves de Noël avec vos proches</p>
         </header>
-        
+   
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
         <!-- Layout de création -->
         <div class="creation-layout">
             <!-- Panel d'informations -->
@@ -891,6 +923,18 @@
                         </div>
                     </div>
                 </div>
+
+            <div class="ad-row2">
+                <div>
+                    @component('components.ads.banners.banner-320x50')
+                    @endcomponent
+                </div>
+                <div>
+                    @component('components.ads.banners.banner-320x50')
+                    @endcomponent
+                </div>
+            </div>
+                
             </div>
         </div>
         
@@ -1043,12 +1087,36 @@
             </a>
         </footer>
     </div>
+
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
     
     <!-- Notification -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
         <span id="notificationText">Cadeau ajouté avec succès!</span>
     </div>
+
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
+    <x-footer></x-footer>
     
     <script>
         // ===== VARIABLES GLOBALES =====

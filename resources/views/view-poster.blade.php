@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <x-seo></x-seo>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $poster->title }} - Affiche de Noël</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -549,6 +550,9 @@
     </style>
 </head>
 <body>
+
+    @include('components.floating-home')
+
     <!-- Étoiles flottantes décoratives -->
     <div class="floating-star star-1">⭐</div>
     <div class="floating-star star-2">✨</div>
@@ -946,10 +950,10 @@
                             <i class="fas fa-ruler"></i> Format
                         </label>
                         <select id="formatSelect" style="width: 100%; padding: 12px; border: 2px solid var(--rose-clair); border-radius: 10px; font-family: 'Poppins', sans-serif;">
-                            <option value="a4">A4 (21x29.7 cm) - 9.99€</option>
-                            <option value="a3">A3 (29.7x42 cm) - 14.99€</option>
-                            <option value="a2">A2 (42x59.4 cm) - 24.99€</option>
-                            <option value="canvas">Toile sur châssis - 39.99€</option>
+                            <option value="a4">A4 (21x29.7 cm) - 9.99$</option>
+                            <option value="a3">A3 (29.7x42 cm) - 14.99$</option>
+                            <option value="a2">A2 (42x59.4 cm) - 24.99$</option>
+                            <option value="canvas">Toile sur châssis - 39.99$</option>
                         </select>
                     </div>
                     
@@ -959,16 +963,16 @@
                         </label>
                         <select id="frameSelect" style="width: 100%; padding: 12px; border: 2px solid var(--rose-clair); border-radius: 10px; font-family: 'Poppins', sans-serif;">
                             <option value="none">Sans cadre</option>
-                            <option value="classic">Cadre classique (+7€)</option>
-                            <option value="premium">Cadre premium (+15€)</option>
-                            <option value="luxury">Cadre de luxe (+25€)</option>
+                            <option value="classic">Cadre classique (+7$)</option>
+                            <option value="premium">Cadre premium (+15$)</option>
+                            <option value="luxury">Cadre de luxe (+25$)</option>
                         </select>
                     </div>
                     
                     <div style="background: var(--rose-clair); padding: 15px; border-radius: 10px; margin-top: 20px;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                             <span>Total estimé:</span>
-                            <span id="totalPrice" style="font-weight: bold; color: var(--vert-noel);">9.99€</span>
+                            <span id="totalPrice" style="font-weight: bold; color: var(--vert-noel);">9.99$</span>
                         </div>
                         <small style="color: #7a6a6a; display: block;">Frais de port inclus</small>
                     </div>
@@ -984,6 +988,8 @@
             </div>
         </div>
     </div>
+
+    <x-footer></x-footer>
     
     <!-- Notification -->
     <div class="notification" id="notification">
@@ -1494,7 +1500,7 @@
             const frame = document.getElementById('frameSelect').value;
             
             const total = formatPrices[format] + framePrices[frame];
-            document.getElementById('totalPrice').textContent = total.toFixed(2) + '€';
+            document.getElementById('totalPrice').textContent = total.toFixed(2) + '$';
         }
         
         // Initialiser le prix

@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <x-seo></x-seo>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créer votre Carte de Vœux - Féérie de Noël</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -236,6 +237,31 @@
             font-size: 0.9rem;
         }
         
+        /* ===== AD ROW ===== */
+        .ad-row{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap
+        }
+        .ad-row2{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap
+        }
+
+        @media (max-width: 605px) {
+            .ad-row{
+                gap: 5px;
+            }
+        }
+
+
         /* Styles des templates */
         .template-classique { background: linear-gradient(135deg, #f8c8dc, #e0bbe4); color: #5a4a4a; }
         .template-modern { background: linear-gradient(135deg, #a5f3fc, #e0f7ff); color: #1e3a8a; }
@@ -559,6 +585,8 @@
 <body>
     <!-- Confetti animé -->
     <div id="confettiContainer"></div>
+
+    @include('components.floating-home')
     
     <div class="container">
         <!-- Header animé -->
@@ -566,6 +594,17 @@
             <h1 class="card-title">Carte de Vœux Enchantée</h1>
             <p class="card-subtitle">Créez des souhaits magiques pour le Nouvel An</p>
         </header>
+
+        <div class="ad-row">
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+        </div>
         
         <!-- Layout de création -->
         <div class="creation-layout">
@@ -694,6 +733,28 @@
                 <div style="text-align: center; margin-top: 25px; color: #7a6a6a; font-size: 0.9rem;">
                     <i class="fas fa-sync-alt"></i> La prévisualisation se met à jour automatiquement
                 </div>
+
+            <div class="ad-row2">
+                <div>
+                    @component('components.ads.banners.banner-320x50')
+                    @endcomponent
+                </div>
+                <div>
+                    @component('components.ads.banners.banner-320x50')
+                    @endcomponent
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="ad-row">
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
             </div>
         </div>
         
@@ -709,14 +770,131 @@
             
             <div class="form-group">
                 <div class="phone-input-group">
-                    <select class="form-select" id="countryCode" style="width: 120px;">
-                        <option value="+33">+33 FR</option>
-                        <option value="+1">+1 US</option>
-                        <option value="+32">+32 BE</option>
-                        <option value="+41">+41 CH</option>
-                        <option value="+237">+237 CM</option>
-                    </select>
-                    <input type="tel" class="form-input" id="recipientPhone" placeholder="Numéro du destinataire (sans le 0)" required>
+                <select class="form-select" id="countryCode" style="width: 200px;">
+                    <!-- Pays Africains -->
+                    <optgroup label="🌍 Afrique">
+                        <option value="+213">+213 DZ Algérie</option>
+                        <option value="+244">+244 AO Angola</option>
+                        <option value="+229">+229 BJ Bénin</option>
+                        <option value="+267">+267 BW Botswana</option>
+                        <option value="+226">+226 BF Burkina Faso</option>
+                        <option value="+257">+257 BI Burundi</option>
+                        <option value="+237">+237 CM Cameroun</option>
+                        <option value="+238">+238 CV Cap-Vert</option>
+                        <option value="+236">+236 CF Centrafrique</option>
+                        <option value="+235">+235 TD Tchad</option>
+                        <option value="+269">+269 KM Comores</option>
+                        <option value="+242">+242 CG Congo</option>
+                        <option value="+243">+243 CD RD Congo</option>
+                        <option value="+225">+225 CI Côte d'Ivoire</option>
+                        <option value="+253">+253 DJ Djibouti</option>
+                        <option value="+20">+20 EG Égypte</option>
+                        <option value="+240">+240 GQ Guinée équatoriale</option>
+                        <option value="+291">+291 ER Érythrée</option>
+                        <option value="+268">+268 SZ Eswatini</option>
+                        <option value="+251">+251 ET Éthiopie</option>
+                        <option value="+241">+241 GA Gabon</option>
+                        <option value="+220">+220 GM Gambie</option>
+                        <option value="+233">+233 GH Ghana</option>
+                        <option value="+224">+224 GN Guinée</option>
+                        <option value="+245">+245 GW Guinée-Bissau</option>
+                        <option value="+254">+254 KE Kenya</option>
+                        <option value="+266">+266 LS Lesotho</option>
+                        <option value="+231">+231 LR Libéria</option>
+                        <option value="+218">+218 LY Libye</option>
+                        <option value="+261">+261 MG Madagascar</option>
+                        <option value="+265">+265 MW Malawi</option>
+                        <option value="+223">+223 ML Mali</option>
+                        <option value="+222">+222 MR Mauritanie</option>
+                        <option value="+230">+230 MU Maurice</option>
+                        <option value="+212">+212 MA Maroc</option>
+                        <option value="+258">+258 MZ Mozambique</option>
+                        <option value="+264">+264 NA Namibie</option>
+                        <option value="+227">+227 NE Niger</option>
+                        <option value="+234">+234 NG Nigéria</option>
+                        <option value="+250">+250 RW Rwanda</option>
+                        <option value="+239">+239 ST Sao Tomé-et-Principe</option>
+                        <option value="+221">+221 SN Sénégal</option>
+                        <option value="+248">+248 SC Seychelles</option>
+                        <option value="+232">+232 SL Sierra Leone</option>
+                        <option value="+252">+252 SO Somalie</option>
+                        <option value="+27">+27 ZA Afrique du Sud</option>
+                        <option value="+211">+211 SS Soudan du Sud</option>
+                        <option value="+249">+249 SD Soudan</option>
+                        <option value="+255">+255 TZ Tanzanie</option>
+                        <option value="+228">+228 TG Togo</option>
+                        <option value="+216">+216 TN Tunisie</option>
+                        <option value="+256">+256 UG Ouganda</option>
+                        <option value="+260">+260 ZM Zambie</option>
+                        <option value="+263">+263 ZW Zimbabwe</option>
+                    </optgroup>
+
+                    <!-- Europe -->
+                    <optgroup label="🇪🇺 Europe">
+                        <option value="+33">+33 FR France</option>
+                        <option value="+49">+49 DE Allemagne</option>
+                        <option value="+44">+44 GB Royaume-Uni</option>
+                        <option value="+39">+39 IT Italie</option>
+                        <option value="+34">+34 ES Espagne</option>
+                        <option value="+32">+32 BE Belgique</option>
+                        <option value="+41">+41 CH Suisse</option>
+                        <option value="+31">+31 NL Pays-Bas</option>
+                        <option value="+351">+351 PT Portugal</option>
+                        <option value="+7">+7 RU Russie</option>
+                        <option value="+48">+48 PL Pologne</option>
+                        <option value="+46">+46 SE Suède</option>
+                        <option value="+45">+45 DK Danemark</option>
+                        <option value="+47">+47 NO Norvège</option>
+                        <option value="+358">+358 FI Finlande</option>
+                        <option value="+43">+43 AT Autriche</option>
+                        <option value="+30">+30 GR Grèce</option>
+                        <option value="+353">+353 IE Irlande</option>
+                    </optgroup>
+
+                    <!-- Amérique du Nord -->
+                    <optgroup label="🌎 Amérique du Nord">
+                        <option value="+1">+1 US/CA États-Unis/Canada</option>
+                        <option value="+52">+52 MX Mexique</option>
+                    </optgroup>
+
+                    <!-- Amérique du Sud -->
+                    <optgroup label="🌎 Amérique du Sud">
+                        <option value="+55">+55 BR Brésil</option>
+                        <option value="+54">+54 AR Argentine</option>
+                        <option value="+56">+56 CL Chili</option>
+                        <option value="+57">+57 CO Colombie</option>
+                        <option value="+51">+51 PE Pérou</option>
+                        <option value="+58">+58 VE Venezuela</option>
+                    </optgroup>
+
+                    <!-- Asie -->
+                    <optgroup label="🌏 Asie">
+                        <option value="+86">+86 CN Chine</option>
+                        <option value="+91">+91 IN Inde</option>
+                        <option value="+81">+81 JP Japon</option>
+                        <option value="+82">+82 KR Corée du Sud</option>
+                        <option value="+62">+62 ID Indonésie</option>
+                        <option value="+66">+66 TH Thaïlande</option>
+                        <option value="+84">+84 VN Vietnam</option>
+                        <option value="+63">+63 PH Philippines</option>
+                        <option value="+65">+65 SG Singapour</option>
+                        <option value="+60">+60 MY Malaisie</option>
+                        <option value="+92">+92 PK Pakistan</option>
+                        <option value="+880">+880 BD Bangladesh</option>
+                        <option value="+971">+971 AE Émirats Arabes Unis</option>
+                        <option value="+966">+966 SA Arabie Saoudite</option>
+                        <option value="+972">+972 IL Israël</option>
+                        <option value="+90">+90 TR Turquie</option>
+                    </optgroup>
+
+                    <!-- Océanie -->
+                    <optgroup label="🌏 Océanie">
+                        <option value="+61">+61 AU Australie</option>
+                        <option value="+64">+64 NZ Nouvelle-Zélande</option>
+                    </optgroup>
+                </select>
+
+                <input type="tel" class="form-input" id="recipientPhone" placeholder="Numéro du destinataire (sans le 0)" required>
                 </div>
                 <small style="display: block; margin-top: 8px; color: #7a6a6a;">
                     Exemple: 6 12 34 56 78 (sans espaces)
@@ -737,6 +915,17 @@
             <button type="button" class="btn-action btn-share" id="shareBtn">
                 <i class="fas fa-share-alt"></i> Partager
             </button>
+        </div>
+
+        <div class="ad-row">
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
         </div>
         
         <!-- Footer -->
@@ -769,6 +958,20 @@
         <i class="fas fa-check-circle"></i>
         <span id="notificationText">Votre carte a été créée avec succès!</span>
     </div>
+
+        <div class="ad-row">
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+            <div>
+                @component('components.ads.banners.banner-320x50')
+                @endcomponent
+            </div>
+        </div>
+
+
+    <x-footer></x-footer>
     
     <script>
         // ===== VARIABLES GLOBALES =====

@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <x-seo></x-seo>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $letter->title }} - Lettre de Noël</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -38,6 +39,16 @@
             position: relative;
         }
         
+        /* ===== ADS ROW STYLES ===== */
+        .ad-row2{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap
+        }
+
         /* ===== ANIMATIONS ===== */
         @keyframes snowFall {
             0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
@@ -551,6 +562,9 @@
     </style>
 </head>
 <body>
+
+    @include('components.floating-home')
+
     <!-- Flocons de neige -->
     <div id="snowContainer"></div>
     
@@ -560,6 +574,17 @@
             <h1 class="view-title">Lettre de Noël Reçue!</h1>
             <p class="view-subtitle">Un message chaleureux pour les fêtes</p>
         </header>
+
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
         
         <!-- Lettre principale -->
         <div class="letter-display">
@@ -599,6 +624,17 @@
                 </div>
             </div>
         </div>
+
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
         
         <!-- Informations -->
         <div class="letter-info">
@@ -669,11 +705,23 @@
             <!-- QR Code -->
             <div style="text-align: center; margin-top: 40px;">
                 <div style="font-size: 1.2rem; color: var(--noir-doux); margin-bottom: 15px;">
-                    <i class="fas fa-qrcode"></i> Scanner pour sauvegarder
+                    <i class="fas fa-qrcode"></i><a href="https://www.effectivegatecpm.com/absjb07064?key=5258d3aa02a1038dea64f8e63a8cd16b" target="_blank" rel="noopener noreferrer">Cliquer pour sauvegarder</a>
                 </div>
                 <div id="qrcode" style="display: inline-block; padding: 20px; background: white; border-radius: 15px;"></div>
             </div>
         </div>
+
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
         
         <!-- Actions -->
         <div class="actions-section">
@@ -739,6 +787,17 @@
                 Que l'esprit de Noël vous accompagne toute l'année!
             </p>
         </div>
+
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
         
         <!-- Footer -->
         <footer class="footer">
@@ -761,6 +820,17 @@
             </div>
         </footer>
     </div>
+
+    {{-- <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div> --}}
     
     <!-- Modal de réponse -->
     <div class="modal" id="replyModal">
@@ -789,6 +859,17 @@
         </div>
     </div>
     
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
     <!-- Modal de partage -->
     <div class="modal" id="shareModal">
         <div class="modal-content">
@@ -831,6 +912,19 @@
             </div>
         </div>
     </div>
+
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
+    <x-footer></x-footer>
     
     <!-- Notification -->
     <div class="notification" id="notification">

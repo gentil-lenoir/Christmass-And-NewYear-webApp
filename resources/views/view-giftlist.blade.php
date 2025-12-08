@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <x-seo></x-seo>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $giftList->title }} - Liste de Cadeaux</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -35,6 +36,16 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* ===== ADS ROW STYLES ===== */
+        .ad-row2{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap
         }
         
         /* ===== ANIMATIONS ===== */
@@ -732,6 +743,9 @@
     </style>
 </head>
 <body>
+
+    @include('components.floating-home')
+
     <!-- Cadeaux flottants décoratifs -->
     <div class="floating-gift gift-1">🎁</div>
     <div class="floating-gift gift-2">🎀</div>
@@ -745,7 +759,17 @@
             <h1 class="view-title">{{ $giftList->title }}</h1>
             <p class="view-subtitle">Partagez la magie de Noël</p>
         </header>
-        
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
         <!-- Informations de la liste -->
         <div class="list-info">
             <div class="list-owner">
@@ -773,7 +797,7 @@
                     <div class="stat-icon">
                         <i class="fas fa-euro-sign"></i>
                     </div>
-                    <div class="stat-value">{{ number_format($giftList->total_price, 2, ',', ' ') }}€</div>
+                    <div class="stat-value">{{ number_format($giftList->total_price, 2, ',', ' ') }}$</div>
                     <div class="stat-label">Budget total</div>
                 </div>
                 
@@ -799,7 +823,7 @@
             <!-- QR Code -->
             <div style="text-align: center; margin-top: 40px;">
                 <div style="font-size: 1.2rem; color: var(--noir-doux); margin-bottom: 15px;">
-                    <i class="fas fa-qrcode"></i> Scanner pour partager
+                    <i class="fas fa-qrcode"></i> <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" rel="noopener noreferrer">Scanner pour partager</a>
                 </div>
                 <div id="qrcode" style="display: inline-block; padding: 20px; background: white; border-radius: 15px;"></div>
             </div>
@@ -832,6 +856,17 @@
                     <i class="fas fa-lock"></i> Réservés
                 </button>
             </div>
+
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
             
             <!-- Grille de cadeaux -->
             <div class="gifts-grid" id="giftsGrid">
@@ -872,7 +907,7 @@
                     <div class="gift-body">
                         @if(isset($gift['price']) && $gift['price'] > 0)
                         <div class="gift-price">
-                            <i class="fas fa-euro-sign"></i> {{ number_format($gift['price'], 2, ',', ' ') }}€
+                            <i class="fas fa-euro-sign"></i> {{ number_format($gift['price'], 2, ',', ' ') }}$
                         </div>
                         @endif
                         
@@ -919,7 +954,6 @@
                 </div>
                 @endforeach
             </div>
-            
             <!-- Message si liste vide -->
             @if(count($giftList->gifts) == 0)
             <div style="text-align: center; padding: 60px 20px; color: #9a8a8a;">
@@ -931,7 +965,17 @@
             </div>
             @endif
         </div>
-        
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
         <!-- Modal de réservation -->
         <div class="modal" id="reservationModal">
             <div class="modal-content">
@@ -980,27 +1024,37 @@
                 </div>
             </div>
         </div>
-        
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
         <!-- Actions -->
         <div class="actions-section">
             <h2 class="actions-title"><i class="fas fa-magic"></i> Que souhaitez-vous faire?</h2>
             
             <div class="actions-grid">
-                <a href="#" class="action-btn" id="shareListBtn">
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="action-btn" id="shareListBtn">
                     <div class="action-icon">
                         <i class="fas fa-share-alt"></i>
                     </div>
                     <span class="action-label">Partager</span>
                 </a>
                 
-                <a href="#" class="action-btn" id="printBtn">
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="action-btn" id="printBtn">
                     <div class="action-icon">
                         <i class="fas fa-print"></i>
                     </div>
                     <span class="action-label">Imprimer</span>
                 </a>
                 
-                <a href="#" class="action-btn" id="downloadBtn">
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="action-btn" id="downloadBtn">
                     <div class="action-icon">
                         <i class="fas fa-download"></i>
                     </div>
@@ -1021,7 +1075,7 @@
                     <span class="action-label">Accueil</span>
                 </a>
                 
-                <a href="mailto:?subject=Liste de cadeaux de {{ $giftList->owner }}" class="action-btn">
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" class="action-btn">
                     <div class="action-icon">
                         <i class="fas fa-envelope"></i>
                     </div>
@@ -1029,7 +1083,17 @@
                 </a>
             </div>
         </div>
-        
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
         <!-- Message de remerciement -->
         <div class="thankyou-section">
             <h2 class="thankyou-title">Merci pour votre générosité!</h2>
@@ -1067,12 +1131,34 @@
             </div>
         </footer>
     </div>
-    
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
     <!-- Notification -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
         <span id="notificationText">Opération réussie!</span>
     </div>
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
+    <x-footer></x-footer>
     
     <!-- Bibliothèque QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
@@ -1370,7 +1456,7 @@
                         <h3 style="margin: 0 0 10px; color: #ff8fa3;">${gift.name}</h3>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                             <span style="color: #666;">Priorité: ${gift.priority === 'high' ? 'Haute' : gift.priority === 'medium' ? 'Moyenne' : 'Basse'}</span>
-                            ${gift.price ? `<span style="font-weight: bold; color: #2e8b57;">${gift.price.toFixed(2)}€</span>` : ''}
+                            ${gift.price ? `<span style="font-weight: bold; color: #2e8b57;">${gift.price.toFixed(2)}$</span>` : ''}
                         </div>
                         ${gift.store ? `<p style="margin: 5px 0; color: #666;"><strong>Magasin:</strong> ${gift.store}</p>` : ''}
                         ${gift.notes ? `<p style="margin: 5px 0; color: #666;">${gift.notes}</p>` : ''}
@@ -1486,7 +1572,7 @@
                                 <div class="print-stat-label">Cadeaux</div>
                             </div>
                             <div class="print-stat">
-                                <div class="print-stat-value">${$giftList->total_price.toFixed(2)}€</div>
+                                <div class="print-stat-value">${$giftList->total_price.toFixed(2)}$</div>
                                 <div class="print-stat-label">Budget total</div>
                             </div>
                             <div class="print-stat">

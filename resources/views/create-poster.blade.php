@@ -888,7 +888,7 @@
         </div>
         
         <!-- Formulaire de texte -->
-        <div class="text-inputs">
+        <div class="text-inputs" hidden>
             <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--rose-fonce); text-align: center; margin-bottom: 30px;">
                 <i class="fas fa-edit"></i> Informations de l'affiche
             </h2>
@@ -933,38 +933,7 @@
                 </div>
             </form>
         </div>
-        
-        <!-- Section WhatsApp -->
-        <div class="whatsapp-section">
-            <div class="whatsapp-header">
-                <i class="fab fa-whatsapp"></i>
-                <div>
-                    <h3 style="margin: 0; color: var(--noir-doux);">Partagez votre création</h3>
-                    <p style="margin: 5px 0 0; color: #7a6a6a;">Envoyez votre affiche par WhatsApp</p>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label"><i class="fas fa-phone"></i> Numéro WhatsApp</label>
-                    <div style="display: flex; gap: 15px;">
-                        <select class="form-select" id="countryCode" style="flex: 0 0 120px;">
-                            <option value="+250">+250 RW</option>
-                            <option value="+33">+33 FR</option>
-                            <option value="+1">+1 US</option>
-                            <option value="+32">+32 BE</option>
-                        </select>
-                        <input type="tel" class="form-input" id="recipientPhone" placeholder="Numéro du destinataire">
-                    </div>
-                </div>
                 
-                <div class="form-group">
-                    <label class="form-label"><i class="fas fa-user-friends"></i> Destinataires multiples</label>
-                    <input type="text" class="form-input" id="multiplePhones" placeholder="Séparez par des virgules">
-                </div>
-            </div>
-        </div>
-        
         <!-- Boutons d'action -->
         <div class="action-buttons">
             <button type="button" class="btn-action btn-download" id="downloadBtn">

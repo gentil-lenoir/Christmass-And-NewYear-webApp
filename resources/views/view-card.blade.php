@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <x-seo></x-seo>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $card->title }} - Carte de Vœux</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -36,6 +37,16 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* ===== ADS ROW STYLES ===== */
+        .ad-row2{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap
         }
         
         /* ===== ANIMATIONS ===== */
@@ -530,6 +541,9 @@
     </style>
 </head>
 <body>
+
+    @include('components.floating-home')
+
     <!-- Confettis animés -->
     <div id="confettiContainer"></div>
     
@@ -539,7 +553,17 @@
             <h1 class="view-title">Carte de Vœux Reçue!</h1>
             <p class="view-subtitle">Quelqu'un pense à vous avec affection</p>
         </header>
-        
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
         <!-- Carte principale -->
         <div class="card-display">
             <div class="card-container card-{{ $card->template }}">
@@ -564,7 +588,17 @@
                 </div>
             </div>
         </div>
-        
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
         <!-- Informations -->
         <div class="card-info">
             <h2 class="info-title"><i class="fas fa-info-circle"></i> Informations</h2>
@@ -633,39 +667,49 @@
             
             <div style="text-align: center; margin-top: 30px;">
                 <div style="font-size: 1.2rem; color: var(--noir-doux); margin-bottom: 15px;">
-                    <i class="fas fa-qrcode"></i> Scanner pour partager
+                    <i class="fas fa-qrcode"></i> <a href="https://www.effectivegatecpm.com/absjb07064?key=5258d3aa02a1038dea64f8e63a8cd16b" target="_blank" rel="noopener noreferrer">Scanner pour partager</a>
                 </div>
                 <div id="qrcode" style="display: inline-block; padding: 20px; background: white; border-radius: 15px;"></div>
             </div>
         </div>
-        
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+
         <!-- Actions -->
         <div class="actions-section">
             <h2 class="actions-title"><i class="fas fa-magic"></i> Que souhaitez-vous faire?</h2>
             
             <div class="actions-grid">
-                <a href="#" class="action-btn" id="replyBtn">
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="action-btn" id="replyBtn">
                     <div class="action-icon">
                         <i class="fas fa-reply"></i>
                     </div>
                     <span class="action-label">Répondre</span>
                 </a>
                 
-                <a href="#" class="action-btn" id="downloadBtn">
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="action-btn" id="downloadBtn">
                     <div class="action-icon">
                         <i class="fas fa-download"></i>
                     </div>
                     <span class="action-label">Télécharger</span>
                 </a>
                 
-                <a href="#" class="action-btn" id="shareBtn">
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="action-btn" id="shareBtn">
                     <div class="action-icon">
                         <i class="fas fa-share-alt"></i>
                     </div>
                     <span class="action-label">Partager</span>
                 </a>
                 
-                <a href="#" class="action-btn" id="printBtn">
+                <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="action-btn" id="printBtn">
                     <div class="action-icon">
                         <i class="fas fa-print"></i>
                     </div>
@@ -687,7 +731,17 @@
                 </a>
             </div>
         </div>
-        
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+      
         <!-- Message de remerciement -->
         <div class="thankyou-section">
             <h2 class="thankyou-title">Merci d'avoir visité!</h2>
@@ -702,7 +756,17 @@
                 Que 2025 vous apporte bonheur et succès!
             </p>
         </div>
-        
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+  
         <!-- Footer -->
         <footer class="footer">
             <p style="font-size: 1.1rem; margin-bottom: 15px;">
@@ -724,7 +788,17 @@
             </div>
         </footer>
     </div>
-    
+    <div class="ad-row2">
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+        <div>
+            @component('components.ads.banners.banner-320x50')
+            @endcomponent
+        </div>
+    </div>
+ 
     <!-- Modal de réponse -->
     <div class="modal" id="replyModal">
         <div class="modal-content">
@@ -800,6 +874,8 @@
         <i class="fas fa-check-circle"></i>
         <span id="notificationText">Opération réussie!</span>
     </div>
+
+    <x-footer></x-footer>
     
     <!-- Bibliothèque QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
