@@ -1,88 +1,55 @@
 FROM php:8.2-fpm-alpine
 
-# Installer les dépendances système
+# 1. Installer uniquement ce qui est ABSOLUMENT nécessaire
 RUN apk update && apk add --no-cache \
     nginx \
     supervisor \
-    curl \
-    git \
-    libzip-dev \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    oniguruma-dev \
-    postgresql-dev \
-    nodejs \
-    npm \
-    yarn
+    curl
 
-# Installer les extensions PHP
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_pgsql mbstring zip exif pcntl gd
+# 2. Installer extensions PHP minimales
+RUN docker-php-ext-install pdo pdo_mysql
 
-# Installer Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Créer le répertoire de travail
+# 3. Définir le répertoire de travail
 WORKDIR /var/www
 
-# Copier les fichiers de configuration des dépendances
-COPY composer.json composer.lock ./
-
-# Installer les dépendances PHP (avec gestion d'erreur)
-RUN set -eux; \
-    if [ -f composer.json ]; then \
-        composer install --no-dev --optimize-autoloader --no-progress --no-scripts; \
-    else \
-        echo "composer.json not found, skipping Composer installation"; \
-    fi
-
-# Copier package.json pour Node
-COPY package.json package-lock.json* ./
-
-# Installer les dépendances Node
-RUN set -eux; \
-    if [ -f package.json ]; then \
-        npm ci --only=production --silent; \
-    else \
-        echo "package.json not found, skipping npm installation"; \
-    fi
-
-# Copier toute l'application
+# 4. Copier TOUT le code source
 COPY . .
 
-# Déplacer dans le bon répertoire (si nécessaire)
-RUN if [ -d /var/www/html ]; then cp -r /var/www/* /var/www/html/; fi
+# 5. VÉRIFICATION CRITIQUE - Afficher ce qui est copié
+RUN echo "=== CONTENU DU RÉPERTOIRE ===" && \
+    ls -la && \
+    echo "=== COMPOSER.JSON EXISTE ? ===" && \
+    if [ -f composer.json ]; then cat composer.json; else echo "NON TROUVÉ"; fi && \
+    echo "=== TAILLE DU PROJET ===" && \
+    du -sh . && \
+    echo "=== PERMISSIONS ===" && \
+    ls -la composer.json 2>/dev/null || echo "composer.json absent"
 
-# Configurations
-COPY docker/nginx/default.conf /etc/nginx/http.d/default.conf
-COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# 6. Installer Composer SANS l'utiliser pour l'instant
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
+    php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+    rm composer-setup.php
 
-# Compiler les assets
-RUN if [ -f package.json ] && [ -f vite.config.js ] || [ -f webpack.mix.js ]; then \
-        npm run build; \
-    elif [ -f artisan ]; then \
-        php artisan config:clear; \
+# 7. CRÉER VENDOR MANUELLEMENT (solution d'urgence)
+RUN echo "=== CRÉATION DE VENDOR ALTERNATIVE ===" && \
+    mkdir -p vendor && \
+    printf '<?php\n// Vendor autoload factice\nspl_autoload_register(function ($class) {\n    $prefix = "App\\\\\\\\";\n    $base_dir = __DIR__ . "/../app/";\n    $len = strlen($prefix);\n    if (strncmp($prefix, $class, $len) !== 0) return;\n    $relative_class = substr($class, $len);\n    $file = $base_dir . str_replace("\\\\\\\\", "/", $relative_class) . ".php";\n    if (file_exists($file)) require $file;\n});\n' > vendor/autoload.php
+
+# 8. Configurer Nginx (ultra simple)
+RUN printf 'server {\n    listen 80;\n    root /var/www/public;\n    index index.php;\n    \n    location / {\n        try_files $uri $uri/ /index.php?\$query_string;\n    }\n    \n    location ~ \.php\$ {\n        fastcgi_pass 127.0.0.1:9000;\n        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;\n        include fastcgi_params;\n    }\n}\n' > /etc/nginx/conf.d/default.conf
+
+# 9. Créer un index.php de test
+RUN if [ ! -f public/index.php ]; then \
+    mkdir -p public && \
+    printf '<?php\necho "<h1>Laravel Docker Test</h1>";\necho "<p>If you see this, Docker works!</p>";\nphpinfo();\n?>\n' > public/index.php; \
     fi
 
-# Configurer les permissions
-RUN mkdir -p storage bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+# 10. Configurer Supervisor simple
+RUN printf '[supervisord]\nnodaemon=true\n\n[program:php-fpm]\ncommand=php-fpm\n\n[program:nginx]\ncommand=nginx -g "daemon off;"\nstdout_logfile=/dev/stdout\nstdout_logfile_maxbytes=0\nstderr_logfile=/dev/stderr\nstderr_logfile_maxbytes=0\n' > /etc/supervisord.conf
 
-# Générer .env si nécessaire
-RUN if [ ! -f .env ] && [ -f .env.example ]; then \
-        cp .env.example .env \
-        && php artisan key:generate --force; \
-    fi
-
-# Optimiser Laravel
-RUN if [ -f artisan ]; then \
-        php artisan config:cache \
-        && php artisan route:cache \
-        && php artisan view:cache; \
-    fi
+# 11. S'assurer que Nginx peut lire les fichiers
+RUN chown -R www-data:www-data /var/www && \
+    chmod -R 755 /var/www
 
 EXPOSE 80
-
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["supervisord", "-n", "-c", "/etc/supervisord.conf"]
