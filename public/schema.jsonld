@@ -3,51 +3,51 @@
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "http://127.0.0.1:8000/#",
+      "@id": "http://https://christmass-and-newyear.onrender.com/#",
       "name": "ChristmassAndNewYear",
-      "url": "http://127.0.0.1:8000/",
+      "url": "http://https://christmass-and-newyear.onrender.com/",
       "sameAs": [],
-      "logo": "http://127.0.0.1:8000/favicon.ico",
+      "logo": "http://https://christmass-and-newyear.onrender.com/favicon.ico",
       "description": "Application pour créer et partager des cartes et affiches de Noël et Nouvel An."
     },
     {
       "@type": "Page",
-      "@id": "http://127.0.0.1:8000/create-letter",
-      "url": "http://127.0.0.1:8000/",
+      "@id": "http://https://christmass-and-newyear.onrender.com/create-letter",
+      "url": "http://https://christmass-and-newyear.onrender.com/",
       "name": "ChristmassAndNewYear",
       "description": "Créez des cartes et affiches de Noël & Nouvel An — lettres, cadres photo, listes cadeaux, templates et partage.",
       "publisher": {
-        "@id": "http://127.0.0.1:8000/#"
+        "@id": "http://https://christmass-and-newyear.onrender.com/#"
       }
     },
     {
       "@type": "Page",
-      "@id": "http://127.0.0.1:8000/create-giftlist",
-      "url": "http://127.0.0.1:8000/",
+      "@id": "http://https://christmass-and-newyear.onrender.com/create-giftlist",
+      "url": "http://https://christmass-and-newyear.onrender.com/",
       "name": "ChristmassAndNewYear",
       "description": "Créez des cartes et affiches de Noël & Nouvel An — lettres, cadres photo, listes cadeaux, templates et partage.",
       "publisher": {
-        "@id": "http://127.0.0.1:8000/#"
+        "@id": "http://https://christmass-and-newyear.onrender.com/#"
       }
     },
     {
       "@type": "Page",
-      "@id": "http://127.0.0.1:8000/create-poster",
-      "url": "http://127.0.0.1:8000/",
+      "@id": "http://https://christmass-and-newyear.onrender.com/create-poster",
+      "url": "http://https://christmass-and-newyear.onrender.com/",
       "name": "ChristmassAndNewYear",
       "description": "Créez des cartes et affiches de Noël & Nouvel An — lettres, cadres photo, listes cadeaux, templates et partage.",
       "publisher": {
-        "@id": "http://127.0.0.1:8000/#"
+        "@id": "http://https://christmass-and-newyear.onrender.com/#"
       }
     },
     {
       "@type": "WebSite",
-      "@id": "http://127.0.0.1:8000/create-card",
-      "url": "http://127.0.0.1:8000/",
+      "@id": "http://https://christmass-and-newyear.onrender.com/create-card",
+      "url": "http://https://christmass-and-newyear.onrender.com/",
       "name": "ChristmassAndNewYear",
       "description": "Créez des cartes et affiches de Noël & Nouvel An — lettres, cadres photo, listes cadeaux, templates et partage.",
       "publisher": {
-        "@id": "http://127.0.0.1:8000/#organization"
+        "@id": "http://https://christmass-and-newyear.onrender.com/#organization"
       }
     }
   ]

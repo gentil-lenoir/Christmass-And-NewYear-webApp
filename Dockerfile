@@ -38,5 +38,5 @@ RUN nginx -t
 
 RUN mkdir -p public && echo 'OK' > public/index.html
 
-EXPOSE 80
+EXPOSE 8080
 CMD ["sh", "-c", "echo 'Starting...' && nginx -g 'daemon off;'"]
