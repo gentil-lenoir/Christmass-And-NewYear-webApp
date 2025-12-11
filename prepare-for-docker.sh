@@ -17,7 +17,7 @@ COPY . .
 
 # Simple config Nginx
 RUN echo 'server {
-    listen 80;
+    listen 8080;
     root /var/www/public;
     index index.php;
     location / {
