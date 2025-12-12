@@ -1,5 +1,5 @@
-### TO DO
-
-adding ADSTERRA
-adding SMARTLINKS
-
+- [x] Update Dockerfile: Expose port 80, install supervisor, copy supervisord.conf, change CMD to ["/entrypoint.sh"], update nginx config copy
+- [ ] Update entrypoint.sh: Add exec supervisord at the end
+- [x] Update nginx.conf: Ensure it's correct (already seems good)
+- [x] Remove or adjust docker/nginx/default.conf if needed (will replace with nginx.conf) - Not needed, nginx.conf is used
+- [x] Test build and deploy - Docker build executed successfully

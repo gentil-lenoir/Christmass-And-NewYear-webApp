@@ -4,7 +4,7 @@ FROM php:8.4-fpm
 # Installer dépendances système et extensions PHP nécessaires
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libpng-dev libjpeg-dev libonig-dev libxml2-dev libzip-dev \
-    libpq-dev nginx \
+    libpq-dev nginx supervisor \
     && docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install pdo_pgsql mbstring zip exif gd
 
@@ -31,14 +31,17 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 # Copier configuration nginx
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copier configuration supervisor
+COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Exposer le port attendu par Render
-EXPOSE 8080
+EXPOSE 80
 
 # Lancer le container via entrypoint
 CMD ["/entrypoint.sh"]
