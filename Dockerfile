@@ -28,7 +28,7 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 # Désactiver le site par défaut de Nginx
-RUN rm -f /etc/nginx/sites-enabled/default
+RUN rm -f /etc/nginx/sites-enabled/default /etc/nginx/conf.d/default.conf
 
 # Copier configuration nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
