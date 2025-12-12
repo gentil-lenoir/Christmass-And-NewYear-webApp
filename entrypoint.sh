@@ -1,11 +1,13 @@
 #!/bin/sh
 set -e
 
-# Démarrer PHP-FPM en arrière-plan
-php-fpm &
+# Générer APP_KEY si vide
+php artisan key:generate --force
 
-# Attendre que PHP-FPM soit prêt (simple sleep)
-sleep 3
+# Optimisation Laravel
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
-# Démarrer Nginx en premier plan
-nginx -g "daemon off;"
+# Migration base de données
+php artisan migrate --force
