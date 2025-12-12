@@ -103,25 +103,37 @@ RUN if [ ! -f bootstrap/autoload.php ] && [ -f vendor/autoload.php ]; then \
     echo '<?php define("LARAVEL_START", microtime(true)); require __DIR__."/../vendor/autoload.php"; ?>' > bootstrap/autoload.php; \
     fi
 
-# 10. Configurer .env pour production
+# 10. Créer vendor/autoload.php si manquant
+RUN if [ ! -f vendor/autoload.php ]; then \
+    echo "Création de vendor/autoload.php..."; \
+    mkdir -p vendor && \
+    echo '<?php' > vendor/autoload.php && \
+    echo 'spl_autoload_register(function ($class) {' >> vendor/autoload.php && \
+    echo '    if (strpos($class, "App\\\\") === 0) {' >> vendor/autoload.php && \
+    echo '        $file = __DIR__ . "/../app/" . str_replace("\\\\", "/", substr($class, 4)) . ".php";' >> vendor/autoload.php && \
+    echo '        if (file_exists($file)) require $file;' >> vendor/autoload.php && \
+    echo '    }' >> vendor/autoload.php && \
+    echo '});' >> vendor/autoload.php; \
+    fi
+
+# 11. Configurer .env pour production
 RUN if [ ! -f .env ] && [ -f .env.example ]; then \
     echo "Création de .env depuis .env.example..."; \
     cp .env.example .env; \
     fi
 
-# 11. Générer APP_KEY si manquant
+# 12. Générer APP_KEY si manquant
 RUN if [ -f .env ] && ! grep -q "APP_KEY=base64:" .env 2>/dev/null; then \
     echo "Génération de APP_KEY..."; \
     php -r "echo 'APP_KEY=' . 'base64:' . base64_encode(random_bytes(32)) . PHP_EOL;" >> .env; \
     fi
 
-# 12. Configurer les permissions Laravel
+# 13. Configurer les permissions Laravel
 RUN mkdir -p storage/framework/{sessions,views,cache} && \
     chown -R www-data:www-data storage bootstrap && \
     chmod -R 775 storage bootstrap/cache
 
+EXPOSE 8080
 
-EXPOSE 8080  
-# IMPORTANT: Exposer le port 8080
-
+# 14. Utiliser le script de démarrage
 CMD ["/start.sh"]
