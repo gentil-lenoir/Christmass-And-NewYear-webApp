@@ -1,20 +1,65 @@
 FROM php:8.2-fpm-alpine
 
-RUN apk add --no-cache nginx curl
-RUN docker-php-ext-install pdo pdo_mysql
+# 1. Installer les dépendances
+RUN apk add --no-cache \
+    nginx \
+    curl \
+    git \
+    unzip \
+    libzip-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    oniguruma-dev
+
+# 2. Installer extensions PHP
+RUN docker-php-ext-configure gd --with-jpeg && \
+    docker-php-ext-install pdo pdo_mysql mbstring zip gd
+
+# 3. Installer Composer
+RUN curl -sS https://getcomposer.org/installer | php -- \
+    --install-dir=/usr/local/bin \
+    --filename=composer
 
 WORKDIR /var/www
 
-# 1. Copier l'application
+# 4. Copier TOUTE votre application Laravel
 COPY . .
 
-# 2. CRÉER ABSOLUMENT les fichiers nécessaires
-RUN mkdir -p /var/www/public
-RUN echo '<?php phpinfo(); ?>' > /var/www/public/index.php
-RUN echo '<?php echo "test.php works"; ?>' > /var/www/public/test.php
-RUN echo '<!DOCTYPE html><html><head><title>Laravel</title></head><body><h1>HTML Page</h1></body></html>' > /var/www/public/index.html
+# 5. VÉRIFIER que les fichiers Laravel existent
+RUN echo "=== VÉRIFICATION LARAVEL ===" && \
+    echo "1. public/index.php : " && \
+    ls -la public/index.php 2>/dev/null || echo "public/index.php manquant - création..." && \
+    echo "2. composer.json : " && \
+    ls -la composer.json 2>/dev/null || echo "composer.json manquant" && \
+    echo "3. app/ : " && \
+    ls -la app/ 2>/dev/null || echo "app/ manquant"
 
-# 3. Configuration Nginx ULTRA SIMPLE mais CORRECTE
+# 6. Si composer.json existe, installer les dépendances
+RUN if [ -f composer.json ]; then \
+    echo "Installation des dépendances Composer..." && \
+    composer install --no-dev --optimize-autoloader --no-interaction || \
+    echo "⚠️ Composer install échoué, continuation..."; \
+    else \
+    echo "❌ composer.json non trouvé"; \
+    fi
+
+# 7. Si vendor/autoload.php n'existe pas, créer un simple
+RUN if [ ! -f vendor/autoload.php ]; then \
+    echo "Création d'autoloader minimal..." && \
+    mkdir -p vendor && \
+    echo '<?php' > vendor/autoload.php && \
+    echo '// Autoloader minimal' >> vendor/autoload.php && \
+    echo 'spl_autoload_register(function($class) {' >> vendor/autoload.php && \
+    echo '    if (strpos($class, "App\\\\") === 0) {' >> vendor/autoload.php && \
+    echo '        $file = __DIR__ . "/../app/" . str_replace("\\\\", "/", substr($class, 4)) . ".php";' >> vendor/autoload.php && \
+    echo '        if (file_exists($file)) {' >> vendor/autoload.php && \
+    echo '            require $file;' >> vendor/autoload.php && \
+    echo '        }' >> vendor/autoload.php && \
+    echo '    }' >> vendor/autoload.php && \
+    echo '});' >> vendor/autoload.php; \
+    fi
+
+# 8. Configuration Nginx pour Laravel
 RUN cat > /etc/nginx/nginx.conf << 'EOF'
 events {
     worker_connections 1024;
@@ -25,69 +70,38 @@ http {
         listen 8080;
         server_name _;
         root /var/www/public;
+        index index.php index.html;
         
-        # Servir les fichiers statiques
         location / {
             try_files $uri $uri/ /index.php?$query_string;
         }
         
-        # PHP files
         location ~ \.php$ {
             fastcgi_pass 127.0.0.1:9000;
             fastcgi_index index.php;
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         }
+        
+        # Bloque l'accès aux fichiers cachés
+        location ~ /\. {
+            deny all;
+        }
     }
 }
 EOF
 
-# 4. VÉRIFIER que tout est correct
-RUN echo "=== VÉRIFICATION FINALE ===" && \
-    echo "1. Fichier index.php existe?" && \
-    ls -la /var/www/public/index.php && \
-    echo "" && \
-    echo "2. Contenu de index.php:" && \
-    cat /var/www/public/index.php && \
-    echo "" && \
-    echo "3. Configuration Nginx:" && \
-    cat /etc/nginx/nginx.conf | head -20 && \
-    echo "" && \
-    echo "4. Test syntaxe Nginx:" && \
-    nginx -t
+# 9. Configurer les permissions Laravel
+RUN chmod -R 775 storage bootstrap/cache 2>/dev/null || true && \
+    chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
 
-# 5. Script de démarrage avec logs
-RUN cat > /start.sh << 'EOF'
-#!/bin/sh
-set -e
-
-echo "=== DÉMARRAGE ==="
-echo "1. Démarrer PHP-FPM..."
-php-fpm -D
-sleep 2
-
-echo "2. Vérifier PHP-FPM..."
-if pgrep php-fpm > /dev/null; then
-    echo "✅ PHP-FPM en cours"
-else
-    echo "❌ PHP-FPM échoué"
-    exit 1
-fi
-
-echo "3. Tester Nginx config..."
-nginx -t
-
-echo "4. Lancer Nginx..."
-echo "✅ Service prêt sur le port 8080"
-exec nginx -g 'daemon off;'
-EOF
-
-RUN chmod +x /start.sh
+# 10. Créer .env si manquant
+RUN if [ ! -f .env ] && [ -f .env.example ]; then \
+    cp .env.example .env && \
+    echo "APP_KEY=base64:"$(head -c 32 /dev/urandom | base64) >> .env; \
+    fi
 
 EXPOSE 8080
 
-# 6. Health check pour RNDR
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:8080/ || exit 1
-
-CMD ["/start.sh"]
+# 11. Script de démarrage
+CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
