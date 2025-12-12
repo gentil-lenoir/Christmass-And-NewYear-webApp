@@ -17,13 +17,10 @@ WORKDIR /var/www/html
 # Copier tout le projet
 COPY . .
 
-# Copier .env.production vers .env (optionnel, Render doit gérer les env vars)
-RUN if [ -f .env.production ]; then cp .env.production .env; fi
-
 # Installer dépendances Laravel
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Générer APP_KEY si vide
+# Générer APP_KEY si nécessaire
 RUN php artisan key:generate --force || true
 
 # Préparer storage et cache
@@ -36,6 +33,6 @@ COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["/entrypoint.sh"]
