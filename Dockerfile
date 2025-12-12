@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Définir le dossier de travail
-WORKDIR /var/www/html
+WORKDIR /var/www/html/public
 
 # Copier tout le projet avant composer install (artisan présent)
 COPY . .
