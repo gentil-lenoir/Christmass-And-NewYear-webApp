@@ -163,7 +163,7 @@ class Kernel extends HttpKernel
     ];
 }
 KERNEL
-    fi
+    # fi
 
 # 5. Configuration Nginx
 RUN echo 'events{} http { server { listen 8080; root /var/www/public; index index.php; location / { try_files $uri $uri/ /index.php?$query_string; } location ~ \.php$ { fastcgi_pass 127.0.0.1:9000; include fastcgi_params; } } }' > /etc/nginx/nginx.conf
