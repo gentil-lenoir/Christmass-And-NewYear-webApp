@@ -2,7 +2,9 @@
 set -e
 
 # Générer APP_KEY si vide
-php artisan key:generate --force
+if [ -z "$APP_KEY" ]; then
+    php artisan key:generate --force
+fi
 
 # Optimisation Laravel
 php artisan config:cache
