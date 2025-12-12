@@ -94,6 +94,7 @@ $response->send();
 
 $kernel->terminate($request, $response);
 EOF
+    \
     fi
 
 # 9. S'assurer que bootstrap/autoload.php existe (pour compatibilité)
@@ -118,7 +119,7 @@ RUN if [ -f .env ] && ! grep -q "APP_KEY=base64:" .env 2>/dev/null; then \
 RUN mkdir -p storage/framework/{sessions,views,cache} && \
     chown -R www-data:www-data storage bootstrap && \
     chmod -R 775 storage bootstrap/cache
-    
+
 
 EXPOSE 8080  
 # IMPORTANT: Exposer le port 8080
