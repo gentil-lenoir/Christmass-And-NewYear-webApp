@@ -5,6 +5,4 @@ storage/logs/
 .env
 .env.local
 docker-compose.yml
-Dockerfile
-*.md
 .gitignore

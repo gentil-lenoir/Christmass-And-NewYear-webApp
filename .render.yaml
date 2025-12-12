@@ -3,6 +3,8 @@ services:
     name: laravel-app
     env: docker
     dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /
     envVars:
       - key: APP_ENV
         value: production
@@ -11,16 +13,19 @@ services:
       - key: APP_KEY
         sync: false
       - key: DB_CONNECTION
-        sync: false
+        value: pgsql
       - key: DB_HOST
         sync: false
       - key: DB_PORT
-        sync: false
+        value: 5432
       - key: DB_DATABASE
         sync: false
       - key: DB_USERNAME
         sync: false
       - key: DB_PASSWORD
         sync: false
-    healthCheckPath: /health
-    autoDeploy: true
+
+databases:
+  - name: laravel-db
+    engine: postgres
+    plan: starter

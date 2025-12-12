@@ -1,7 +1,8 @@
 #!/bin/sh
+set -e
 
-# Lancer PHP-FPM en arrière-plan
-php-fpm &
+# Attendre FPM socket
+php-fpm -D
 
-# Lancer Nginx au premier plan
+# Lancer Nginx
 nginx -g "daemon off;"
