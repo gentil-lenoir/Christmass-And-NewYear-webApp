@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: laravel-nginx
+    env: docker
+    plan: standard
+    buildCommand: docker build -t laravel-app .
+    startCommand: docker run -p 80:80 laravel-nginx
+    dockerfilePath: ./Dockerfile
+    runtime: docker
+
+  - type: web
+    name: laravel-app
+    env: docker
+    plan: standard
+    dockerfilePath: ./Dockerfile
+    runtime: docker
+
+databases:
+  - name: laravel-db
+    plan: standard
+    engine: mysql
+    version: 8

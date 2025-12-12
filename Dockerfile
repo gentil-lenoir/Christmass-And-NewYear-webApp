@@ -1,33 +1,30 @@
-# 6. Créez le Dockerfile
-cat > Dockerfile << 'EOF'
-FROM php:8.2-fpm-alpine
+FROM php:8.2-fpm
 
-RUN apk add --no-cache nginx
-RUN docker-php-ext-install pdo pdo_mysql
+# Install system packages
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    zip \
+    unzip \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl \
+    && docker-php-ext-install gd
 
-WORKDIR /var/www
+# Setup composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
 
 COPY . .
 
-RUN chmod -R 775 storage bootstrap/cache
+RUN composer install --no-dev --optimize-autoloader
 
-RUN echo 'events {}' > /etc/nginx/nginx.conf
-RUN echo 'http {' >> /etc/nginx/nginx.conf
-RUN echo '    server {' >> /etc/nginx/nginx.conf
-RUN echo '        listen 8080;' >> /etc/nginx/nginx.conf
-RUN echo '        root /var/www/public;' >> /etc/nginx/nginx.conf
-RUN echo '        index index.php;' >> /etc/nginx/nginx.conf
-RUN echo '        location / {' >> /etc/nginx/nginx.conf
-RUN echo '            try_files $uri $uri/ /index.php?$query_string;' >> /etc/nginx/nginx.conf
-RUN echo '        }' >> /etc/nginx/nginx.conf
-RUN echo '        location ~ \.php$ {' >> /etc/nginx/nginx.conf
-RUN echo '            fastcgi_pass 127.0.0.1:9000;' >> /etc/nginx/nginx.conf
-RUN echo '            include fastcgi_params;' >> /etc/nginx/nginx.conf
-RUN echo '        }' >> /etc/nginx/nginx.conf
-RUN echo '    }' >> /etc/nginx/nginx.conf
-RUN echo '}' >> /etc/nginx/nginx.conf
+RUN php artisan key:generate
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
 
-EXPOSE 8080
-
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
-EOF
+CMD ["php-fpm"]
