@@ -1,6 +1,3 @@
-# 2. Supprimez l'ancien Dockerfile
-rm -f Dockerfile
-
 # 3. Créez le nouveau Dockerfile
 cat > Dockerfile << 'EOF'
 FROM php:8.2-fpm-alpine
