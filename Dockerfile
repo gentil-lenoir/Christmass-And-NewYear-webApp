@@ -76,8 +76,8 @@ echo "<!-- Autoloader Laravel RNDR chargé -->\n";
 EOF
 
 # 3. CRÉER UN FICHIER bootstrap/app.php SIMPLIFIÉ si manquant
-RUN if [ ! -f bootstrap/app.php ] || grep -q "Illuminate\\\\Foundation\\\\Application" bootstrap/app.php; then \
-    echo "Création/Correction de bootstrap/app.php..." && \
+RUN if [ ! -f bootstrap/app.php ]; then \
+    echo "Création de bootstrap/app.php..." && \
     cat > bootstrap/app.php << 'APP'
 <?php
 // Application Laravel simplifiée pour RNDR
@@ -108,7 +108,7 @@ $app->singleton(
 
 return $app;
 APP
-    fi
+fi
 
 # 4. CRÉER LES FICHIERS KERNEL ESSENTIELS s'ils manquent
 RUN if [ ! -f app/Http/Kernel.php ]; then \
@@ -163,7 +163,7 @@ class Kernel extends HttpKernel
     ];
 }
 KERNEL
-    # fi
+fi
 
 # 5. Configuration Nginx
 RUN echo 'events{} http { server { listen 8080; root /var/www/public; index index.php; location / { try_files $uri $uri/ /index.php?$query_string; } location ~ \.php$ { fastcgi_pass 127.0.0.1:9000; include fastcgi_params; } } }' > /etc/nginx/nginx.conf
