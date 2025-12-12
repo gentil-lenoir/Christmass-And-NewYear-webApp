@@ -26,6 +26,9 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Générer la clé Laravel si elle n'existe pas
 RUN php artisan key:generate || true
 
+# Exécuter les migrations pour créer toutes les tables (sessions, users, etc.)
+RUN php artisan migrate --force
+
 # Mettre les permissions correctes pour Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
