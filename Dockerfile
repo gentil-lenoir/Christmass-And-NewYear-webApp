@@ -62,14 +62,63 @@ RUN echo 'nginx -t' >> /start.sh
 RUN echo 'exec nginx -g "daemon off;"' >> /start.sh
 RUN chmod +x /start.sh
 
-# 8. Page de test
-RUN mkdir -p public
-RUN echo '<?php' > public/index.php
-RUN echo 'echo "<h1>Laravel RNDR</h1>";' >> public/index.php
-RUN echo 'echo "<p>PHP " . phpversion() . "</p>";' >> public/index.php
-RUN echo 'echo "<p>Extensions: pdo, pdo_mysql loaded</p>";' >> public/index.php
-RUN echo 'echo "<p>Server: " . $_SERVER["SERVER_SOFTWARE"] . "</p>";' >> public/index.php
-RUN echo '?>' >> public/index.php
+# 8. Assurer que le vrai index.php Laravel existe et est prêt
+RUN if [ -f public/index.php ]; then \
+    echo "✅ Le vrai index.php Laravel est présent"; \
+    else \
+    echo "⚠️  Création d'un index.php Laravel basique..."; \
+    mkdir -p public && \
+    cat > public/index.php << 'EOF'
+<?php
+/**
+ * Laravel - A PHP Framework For Web Artisans
+ */
+
+define('LARAVEL_START', microtime(true));
+
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
+}
+
+require __DIR__.'/../vendor/autoload.php';
+
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+
+$response = $kernel->handle(
+    $request = Illuminate\Http\Request::capture()
+);
+
+$response->send();
+
+$kernel->terminate($request, $response);
+EOF
+    fi
+
+# 9. S'assurer que bootstrap/autoload.php existe (pour compatibilité)
+RUN if [ ! -f bootstrap/autoload.php ] && [ -f vendor/autoload.php ]; then \
+    mkdir -p bootstrap && \
+    echo '<?php define("LARAVEL_START", microtime(true)); require __DIR__."/../vendor/autoload.php"; ?>' > bootstrap/autoload.php; \
+    fi
+
+# 10. Configurer .env pour production
+RUN if [ ! -f .env ] && [ -f .env.example ]; then \
+    echo "Création de .env depuis .env.example..."; \
+    cp .env.example .env; \
+    fi
+
+# 11. Générer APP_KEY si manquant
+RUN if [ -f .env ] && ! grep -q "APP_KEY=base64:" .env 2>/dev/null; then \
+    echo "Génération de APP_KEY..."; \
+    php -r "echo 'APP_KEY=' . 'base64:' . base64_encode(random_bytes(32)) . PHP_EOL;" >> .env; \
+    fi
+
+# 12. Configurer les permissions Laravel
+RUN mkdir -p storage/framework/{sessions,views,cache} && \
+    chown -R www-data:www-data storage bootstrap && \
+    chmod -R 775 storage bootstrap/cache
+    
 
 EXPOSE 8080  
 # IMPORTANT: Exposer le port 8080
