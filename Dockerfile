@@ -1,20 +1,68 @@
-FROM nginx:alpine
+# 2. Supprimez l'ancien Dockerfile
+rm -f Dockerfile
 
-COPY . /usr/share/nginx/html/
+# 3. Créez le nouveau Dockerfile
+cat > Dockerfile << 'EOF'
+FROM php:8.2-fpm-alpine
 
-RUN echo '<!DOCTYPE html>' > /usr/share/nginx/html/index.html
-RUN echo '<html>' >> /usr/share/nginx/html/index.html
-RUN echo '<head>' >> /usr/share/nginx/html/index.html
-RUN echo '<title>Laravel RNDR</title>' >> /usr/share/nginx/html/index.html
-RUN echo '<style>' >> /usr/share/nginx/html/index.html
-RUN echo 'body { font-family: Arial; padding: 40px; text-align: center; }' >> /usr/share/nginx/html/index.html
-RUN echo '.success { color: green; font-size: 24px; }' >> /usr/share/nginx/html/index.html
-RUN echo '</style>' >> /usr/share/nginx/html/index.html
-RUN echo '</head>' >> /usr/share/nginx/html/index.html
-RUN echo '<body>' >> /usr/share/nginx/html/index.html
-RUN echo '<h1 class="success">✅ SERVICE EN LIGNE</h1>' >> /usr/share/nginx/html/index.html
-RUN echo '<p>Laravel déployé sur RNDR avec succès</p>' >> /usr/share/nginx/html/index.html
-RUN echo '</body>' >> /usr/share/nginx/html/index.html
-RUN echo '</html>' >> /usr/share/nginx/html/index.html
+RUN apk update && apk add --no-cache nginx
+RUN docker-php-ext-install pdo pdo_mysql
 
-EXPOSE 80
+WORKDIR /var/www
+
+COPY . .
+
+RUN mkdir -p public vendor bootstrap app
+
+RUN echo '<?php' > public/index.php
+RUN echo 'echo "<!DOCTYPE html>";' >> public/index.php
+RUN echo 'echo "<html>";' >> public/index.php
+RUN echo 'echo "<head>";' >> public/index.php
+RUN echo 'echo "<title>Laravel RNDR</title>";' >> public/index.php
+RUN echo 'echo "<style>";' >> public/index.php
+RUN echo 'echo "body { font-family: Arial; padding: 40px; }";' >> public/index.php
+RUN echo 'echo "h1 { color: green; }";' >> public/index.php
+RUN echo 'echo "</style>";' >> public/index.php
+RUN echo 'echo "</head>";' >> public/index.php
+RUN echo 'echo "<body>";' >> public/index.php
+RUN echo 'echo "<h1>✅ Laravel Application</h1>";' >> public/index.php
+RUN echo 'echo "<p>Running on RNDR</p>";' >> public/index.php
+RUN echo 'echo "<p>PHP Version: " . phpversion() . "</p>";' >> public/index.php
+RUN echo 'echo "</body>";' >> public/index.php
+RUN echo 'echo "</html>";' >> public/index.php
+RUN echo '?>' >> public/index.php
+
+RUN echo '<?php ?>' > vendor/autoload.php
+
+RUN echo 'events {' > /etc/nginx/nginx.conf
+RUN echo '    worker_connections 1024;' >> /etc/nginx/nginx.conf
+RUN echo '}' >> /etc/nginx/nginx.conf
+RUN echo 'http {' >> /etc/nginx/nginx.conf
+RUN echo '    server {' >> /etc/nginx/nginx.conf
+RUN echo '        listen 8080;' >> /etc/nginx/nginx.conf
+RUN echo '        root /var/www/public;' >> /etc/nginx/nginx.conf
+RUN echo '        index index.php;' >> /etc/nginx/nginx.conf
+RUN echo '        location / {' >> /etc/nginx/nginx.conf
+RUN echo '            try_files $uri $uri/ /index.php?$query_string;' >> /etc/nginx/nginx.conf
+RUN echo '        }' >> /etc/nginx/nginx.conf
+RUN echo '        location ~ \.php$ {' >> /etc/nginx/nginx.conf
+RUN echo '            fastcgi_pass 127.0.0.1:9000;' >> /etc/nginx/nginx.conf
+RUN echo '            include fastcgi_params;' >> /etc/nginx/nginx.conf
+RUN echo '            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> /etc/nginx/nginx.conf
+RUN echo '        }' >> /etc/nginx/nginx.conf
+RUN echo '    }' >> /etc/nginx/nginx.conf
+RUN echo '}' >> /etc/nginx/nginx.conf
+
+EXPOSE 8080
+
+CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+EOF
+
+# 4. Construisez pour tester
+docker build -t laravel-final .
+
+# 5. Lancez
+docker run -p 8080:8080 --rm laravel-final
+
+# 6. Dans un autre terminal, testez
+curl http://localhost:8080/
