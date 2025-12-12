@@ -1,107 +1,172 @@
 FROM php:8.2-fpm-alpine
 
-# 1. Installer les dépendances
-RUN apk add --no-cache \
-    nginx \
-    curl \
-    git \
-    unzip \
-    libzip-dev \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    oniguruma-dev
-
-# 2. Installer extensions PHP
-RUN docker-php-ext-configure gd --with-jpeg && \
-    docker-php-ext-install pdo pdo_mysql mbstring zip gd
-
-# 3. Installer Composer
-RUN curl -sS https://getcomposer.org/installer | php -- \
-    --install-dir=/usr/local/bin \
-    --filename=composer
+RUN apk add --no-cache nginx
+RUN docker-php-ext-install pdo pdo_mysql
 
 WORKDIR /var/www
 
-# 4. Copier TOUTE votre application Laravel
+# 1. Copier VOTRE application Laravel
 COPY . .
 
-# 5. VÉRIFIER que les fichiers Laravel existent
-RUN echo "=== VÉRIFICATION LARAVEL ===" && \
-    echo "1. public/index.php : " && \
-    ls -la public/index.php 2>/dev/null || echo "public/index.php manquant - création..." && \
-    echo "2. composer.json : " && \
-    ls -la composer.json 2>/dev/null || echo "composer.json manquant" && \
-    echo "3. app/ : " && \
-    ls -la app/ 2>/dev/null || echo "app/ manquant"
+# 2. CRÉER UN AUTOLOADER COMPLET POUR LARAVEL
+RUN mkdir -p vendor
+RUN cat > vendor/autoload.php << 'EOF'
+<?php
+// Autoloader complet pour Laravel RNDR
 
-# 6. Si composer.json existe, installer les dépendances
-RUN if [ -f composer.json ]; then \
-    echo "Installation des dépendances Composer..." && \
-    composer install --no-dev --optimize-autoloader --no-interaction || \
-    echo "⚠️ Composer install échoué, continuation..."; \
-    else \
-    echo "❌ composer.json non trouvé"; \
-    fi
-
-# 7. Si vendor/autoload.php n'existe pas, créer un simple
-RUN if [ ! -f vendor/autoload.php ]; then \
-    echo "Création d'autoloader minimal..." && \
-    mkdir -p vendor && \
-    echo '<?php' > vendor/autoload.php && \
-    echo '// Autoloader minimal' >> vendor/autoload.php && \
-    echo 'spl_autoload_register(function($class) {' >> vendor/autoload.php && \
-    echo '    if (strpos($class, "App\\\\") === 0) {' >> vendor/autoload.php && \
-    echo '        $file = __DIR__ . "/../app/" . str_replace("\\\\", "/", substr($class, 4)) . ".php";' >> vendor/autoload.php && \
-    echo '        if (file_exists($file)) {' >> vendor/autoload.php && \
-    echo '            require $file;' >> vendor/autoload.php && \
-    echo '        }' >> vendor/autoload.php && \
-    echo '    }' >> vendor/autoload.php && \
-    echo '});' >> vendor/autoload.php; \
-    fi
-
-# 8. Configuration Nginx pour Laravel
-RUN cat > /etc/nginx/nginx.conf << 'EOF'
-events {
-    worker_connections 1024;
-}
-
-http {
-    server {
-        listen 8080;
-        server_name _;
-        root /var/www/public;
-        index index.php index.html;
-        
-        location / {
-            try_files $uri $uri/ /index.php?$query_string;
-        }
-        
-        location ~ \.php$ {
-            fastcgi_pass 127.0.0.1:9000;
-            fastcgi_index index.php;
-            include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        }
-        
-        # Bloque l'accès aux fichiers cachés
-        location ~ /\. {
-            deny all;
+// 1. Charger les classes App\
+spl_autoload_register(function ($class) {
+    // Classes App\
+    if (strpos($class, 'App\\') === 0) {
+        $file = __DIR__ . '/../app/' . str_replace('\\', '/', substr($class, 4)) . '.php';
+        if (file_exists($file)) {
+            require $file;
+            return;
         }
     }
+    
+    // Classes Illuminate\ (Laravel core)
+    if (strpos($class, 'Illuminate\\') === 0) {
+        // Convertir Illuminate\Foundation\Application en chemin
+        $parts = explode('\\', $class);
+        if (count($parts) >= 2) {
+            $vendor = strtolower($parts[0]); // 'illuminate'
+            $package = strtolower($parts[1]); // 'foundation', 'support', etc.
+            $subPath = implode('/', array_slice($parts, 2)); // 'Application'
+            
+            // Chercher dans plusieurs emplacements possibles
+            $possiblePaths = [
+                __DIR__ . "/../vendor/illuminate/{$package}/src/{$subPath}.php",
+                __DIR__ . "/../vendor/illuminate/{$package}/{$subPath}.php",
+                __DIR__ . "/../vendor/{$vendor}/{$package}/src/{$subPath}.php",
+                __DIR__ . "/../vendor/{$vendor}/{$package}/{$subPath}.php",
+            ];
+            
+            foreach ($possiblePaths as $path) {
+                if (file_exists($path)) {
+                    require $path;
+                    return;
+                }
+            }
+        }
+    }
+});
+
+// 2. Inclure manuellement les fichiers essentiels Laravel s'ils existent
+$essentialFiles = [
+    __DIR__ . '/../vendor/illuminate/support/helpers.php',
+    __DIR__ . '/../vendor/illuminate/collections/helpers.php',
+    __DIR__ . '/../vendor/symfony/polyfill-mbstring/bootstrap.php',
+    __DIR__ . '/../vendor/symfony/polyfill-php80/bootstrap.php',
+];
+
+foreach ($essentialFiles as $file) {
+    if (file_exists($file)) {
+        require $file;
+    }
 }
+
+// 3. Définir quelques constantes essentielles si elles n'existent pas
+if (!defined('LARAVEL_START')) {
+    define('LARAVEL_START', microtime(true));
+}
+
+echo "<!-- Autoloader Laravel RNDR chargé -->\n";
+?>
 EOF
 
-# 9. Configurer les permissions Laravel
-RUN chmod -R 775 storage bootstrap/cache 2>/dev/null || true && \
-    chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
+# 3. CRÉER UN FICHIER bootstrap/app.php SIMPLIFIÉ si manquant
+RUN if [ ! -f bootstrap/app.php ] || grep -q "Illuminate\\\\Foundation\\\\Application" bootstrap/app.php; then \
+    echo "Création/Correction de bootstrap/app.php..." && \
+    cat > bootstrap/app.php << 'APP'
+<?php
+// Application Laravel simplifiée pour RNDR
 
-# 10. Créer .env si manquant
-RUN if [ ! -f .env ] && [ -f .env.example ]; then \
-    cp .env.example .env && \
-    echo "APP_KEY=base64:"$(head -c 32 /dev/urandom | base64) >> .env; \
+use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Http\Kernel;
+
+// Créer l'application
+$app = new Application(
+    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
+);
+
+// Bindings importants
+$app->singleton(
+    Illuminate\Contracts\Http\Kernel::class,
+    App\Http\Kernel::class
+);
+
+$app->singleton(
+    Illuminate\Contracts\Console\Kernel::class,
+    App\Console\Kernel::class
+);
+
+$app->singleton(
+    Illuminate\Contracts\Debug\ExceptionHandler::class,
+    App\Exceptions\Handler::class
+);
+
+return $app;
+APP
     fi
 
-EXPOSE 8080
+# 4. CRÉER LES FICHIERS KERNEL ESSENTIELS s'ils manquent
+RUN if [ ! -f app/Http/Kernel.php ]; then \
+    echo "Création de app/Http/Kernel.php..." && \
+    mkdir -p app/Http && \
+    cat > app/Http/Kernel.php << 'KERNEL'
+<?php
+namespace App\Http;
 
-# 11. Script de démarrage
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+
+class Kernel extends HttpKernel
+{
+    protected $middleware = [
+        // \App\Http\Middleware\TrustHosts::class,
+        \App\Http\Middleware\TrustProxies::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
+        \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        \App\Http\Middleware\TrimStrings::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+    ];
+
+    protected $middlewareGroups = [
+        'web' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+
+        'api' => [
+            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            'throttle:api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+    ];
+
+    protected $routeMiddleware = [
+        'auth' => \App\Http\Middleware\Authenticate::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+    ];
+}
+KERNEL
+    fi
+
+# 5. Configuration Nginx
+RUN echo 'events{} http { server { listen 8080; root /var/www/public; index index.php; location / { try_files $uri $uri/ /index.php?$query_string; } location ~ \.php$ { fastcgi_pass 127.0.0.1:9000; include fastcgi_params; } } }' > /etc/nginx/nginx.conf
+
+EXPOSE 8080
+CMD sh -c "php-fpm -D && nginx -g 'daemon off;'"
