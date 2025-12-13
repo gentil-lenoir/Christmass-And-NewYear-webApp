@@ -14,7 +14,7 @@
         <a href="https://www.effectivegatecpm.com/absjb07064?key=5258d3aa02a1038dea64f8e63a8cd16b" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
         <a href="https://www.effectivegatecpm.com/xspcjpn1?key=9ad6498b57e30e462d0980590cf05d4d" target="_blank" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
         <a href="https://www.effectivegatecpm.com/absjb07064?key=5258d3aa02a1038dea64f8e63a8cd16b" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
-        <a href="https://wa.me/?text=Savourez votre Nouvel An🥂 et Noël🎄 avec votre partenaire❤️❤️ ou votre ami(e)❤️ sur http://127.0.0.1:8000 et créez des cartes de voeux🎄, des lettres🎄, des textes à père noël🎄, des cadeaux🎄 .." target="_blank" class="social-icon"><i class="fas fa-share-alt"></i></a>
+        <a href="https://wa.me/?text=Savourez votre Nouvel An🥂 et Noël🎄 avec votre partenaire❤️❤️ ou votre ami(e)❤️ sur https://khaleen.osc-fr1.scalingo.io et créez des cartes de voeux🎄, des lettres🎄, des textes à père noël🎄, des cadeaux🎄 .." target="_blank" class="social-icon"><i class="fas fa-share-alt"></i></a>
     </div>
     
     <p class="copyright">
