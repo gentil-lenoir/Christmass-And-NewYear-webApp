@@ -8,9 +8,9 @@
     <script 
         async 
         data-cfasync="false" 
-        src="//pl{{ $key }}.effectivegatecpm.com/{{ $key }}/invoke.js"
+        src="https://pl28251515.effectivegatecpm.com/ed757b08360db2ad11f1d38b1a1d1cb1/invoke.js"
     ></script>
-    <div id="container-native-{{ $key }}"></div>
+    <div id="container-{{ $key }}"></div>
 </div>
 
 <style>

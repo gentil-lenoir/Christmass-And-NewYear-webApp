@@ -1,24 +1,24 @@
-{{-- Popunder Ad --}}
+{{-- Native Banner Ad --}}
 @props([
     'key' => env('ADSTERRA_POPUNDER_KEY'),
 ])
 
-@if(\App\Http\Controllers\AdManagementController::isAdEnabled('popunder'))
-    @php
-        $adKey = $key ?: \App\Http\Controllers\AdManagementController::getAdKey('popunder');
-    @endphp
+<div class="adsterra-native" style="margin: {{ $margin }}; text-align: center;">
+    <script
+        type="text/javascript"
+        src="https://pl28251515.effectivegatecpm.com/ed757b08360db2ad11f1d38b1a1d1cb1/invoke.js"
+    ></script>
+    <div id="container-{{ $key }}"></div>
+</div>
 
-    @if($adKey)
-        {{-- Le popunder s'exécute via le script --}}
-        <script type='text/javascript'>
-            var atOptions = {
-                'key' : '{{ $adKey }}',
-                'format' : 'iframe',
-                'height' : 50,
-                'width' : 320,
-                'params' : {}
-            };
-        </script>
-        <script type='text/javascript' src='//www.highperformanceformat.com/{{ $adKey }}/invoke.js'></script>
-    @endif
-@endif
+<style>
+    .adsterra-native {
+        min-height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f9f9f9;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+</style>

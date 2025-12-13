@@ -14,7 +14,7 @@
             'params' : {}
         };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/{{ $key }}/invoke.js"></script>
+    <script type="text/javascript" src="htpps://www.highperformanceformat.com/{{ $key }}/invoke.js"></script>
 </div>
 
 <style>
