@@ -751,8 +751,8 @@
     </style>
 </head>
 <body>
-    @component('components.ads.popunder')
-    @endcomponent
+    {{-- @component('components.ads.popunder')
+    @endcomponent --}}
 
     <!-- Bouton Home en Overlay -->
     <div class="home-overlay">

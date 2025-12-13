@@ -583,8 +583,8 @@
     </style>
 </head>
 <body>
-    @component('components.ads.popunder')
-    @endcomponent
+    {{-- @component('components.ads.popunder')
+    @endcomponent --}}
 
     <!-- Confetti animé -->
     <div id="confettiContainer"></div>
