@@ -3,7 +3,7 @@
     'key' => env('ADSTERRA_POPUNDER_KEY'),
 ])
 
-<div class="adsterra-native" style="margin: {{ $margin }}; text-align: center;">
+<div class="adsterra-native" style="text-align: center;">
     <script
         type="text/javascript"
         src="https://pl28251515.effectivegatecpm.com/ed757b08360db2ad11f1d38b1a1d1cb1/invoke.js"
