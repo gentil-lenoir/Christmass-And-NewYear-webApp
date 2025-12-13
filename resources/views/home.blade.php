@@ -1408,8 +1408,8 @@
             <div class="option-card">
                 <div class="option-icon">
                     <i class="fas fa-ad"></i>
-                    {{-- @component('components.ads.smartlink')
-                    @endcomponent --}}
+                    @component('components.ads.smartlink')
+                    @endcomponent
                 </div>
 
                     @component('components.ads.banners.banner-160x300')
@@ -1424,8 +1424,8 @@
             <div class="option-card">
                 <div class="option-icon">
                     <i class="fas fa-heart"></i>
-                    @component('components.ads.smartlink')
-                    @endcomponent
+                    {{-- @component('components.ads.smartlink')
+                    @endcomponent --}}
                 </div>
                 <h3 class="option-titre">Carte de Vœux</h3>
                 <p class="option-description">
